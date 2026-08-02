@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard — Mega Ads</title>
+  <link rel="stylesheet" href="css/seller.css"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="seller-header">
+    <div class="seller-header-inner">
+      <div class="seller-logo">
+        <div class="logo-icon">MA</div>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Seller Center</span>
+        </div>
+      </div>
+      <div class="seller-header-actions">
+        <button class="header-icon-btn" onclick="showToast('No new notifications')">&#128276;<span class="notif-dot"></span></button>
+        <a href="../index.html" class="btn-view-store">&#128065; View My Store</a>
+        <div class="seller-profile" onclick="toggleProfileMenu()">
+          <div class="profile-avatar">JM</div>
+          <span>John's Store</span>
+          <span class="profile-caret">&#9662;</span>
+          <div class="profile-menu" id="profileMenu">
+            <a href="#">&#9881;&#65039; Account Settings</a>
+            <a href="../index.html">&#127968; Customer Site</a>
+            <a href="#" onclick="logoutSeller()">&#128682; Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="seller-main">
+
+    <!-- SIDEBAR -->
+    <aside class="seller-sidebar">
+      <nav class="seller-nav">
+        <a href="#" class="snav-item active" onclick="return showView('overview')">&#128202; Overview</a>
+        <a href="#" class="snav-item" onclick="return showView('products')">&#128230; My Products</a>
+        <a href="#" class="snav-item" onclick="return showView('orders')">&#128722; Orders</a>
+        <a href="#" class="snav-item" onclick="return showView('earnings')">&#128176; Earnings</a>
+        <a href="#" class="snav-item" onclick="return showView('reviews')">&#11088; Reviews</a>
+        <a href="#" class="snav-item" onclick="return showView('settings')">&#9881;&#65039; Store Settings</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="seller-content">
+
+      <!-- ===== OVERVIEW ===== -->
+      <div class="view active" id="view-overview">
+        <div class="view-header">
+          <h1>Welcome back, John &#128075;</h1>
+          <p>Here's how your store is performing today.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon stat-blue">&#128176;</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statRevenue">$0</div>
+              <div class="stat-label">Total Revenue</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-purple">&#128722;</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statOrders">0</div>
+              <div class="stat-label">Total Orders</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-teal">&#128230;</div>
+            <div class="stat-info">
+              <div class="stat-value" id="statProducts">0</div>
+              <div class="stat-label">Active Products</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-orange">&#11088;</div>
+            <div class="stat-info">
+              <div class="stat-value">4.8</div>
+              <div class="stat-label">Store Rating</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <div class="panel">
+            <div class="panel-title">&#128202; Sales This Week</div>
+            <div class="bar-chart" id="salesChart"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">&#9888;&#65039; Needs Attention</div>
+            <div class="alert-list">
+              <div class="alert-item">
+                <span class="alert-icon">&#128230;</span>
+                <div><strong>3 orders</strong> awaiting shipment</div>
+              </div>
+              <div class="alert-item">
+                <span class="alert-icon">&#128997;</span>
+                <div><strong>2 products</strong> low on stock</div>
+              </div>
+              <div class="alert-item">
+                <span class="alert-icon">&#128172;</span>
+                <div><strong>5 messages</strong> unanswered</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">&#128229; Recent Orders</div>
+          <table class="data-table" id="recentOrdersTable"></table>
+        </div>
+      </div>
+
+      <!-- ===== MY PRODUCTS ===== -->
+      <div class="view" id="view-products">
+        <div class="view-header-row">
+          <div>
+            <h1>My Products</h1>
+            <p>Manage your product listings</p>
+          </div>
+          <button class="btn-primary" onclick="openProductModal()">&#43; Add New Product</button>
+        </div>
+
+        <div class="toolbar">
+          <input type="text" class="search-box" placeholder="&#128269; Search products..." oninput="filterProducts(this.value)"/>
+          <select class="filter-select" onchange="filterByStatus(this.value)">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+          </select>
+        </div>
+
+        <div class="panel">
+          <table class="data-table" id="productsTable"></table>
+        </div>
+      </div>
+
+      <!-- ===== ORDERS ===== -->
+      <div class="view" id="view-orders">
+        <div class="view-header">
+          <h1>Orders</h1>
+          <p>Track and manage customer orders</p>
+        </div>
+
+        <div class="order-tabs">
+          <button class="order-tab active" onclick="filterOrders('all', this)">All Orders</button>
+          <button class="order-tab" onclick="filterOrders('pending', this)">Pending</button>
+          <button class="order-tab" onclick="filterOrders('shipped', this)">Shipped</button>
+          <button class="order-tab" onclick="filterOrders('delivered', this)">Delivered</button>
+        </div>
+
+        <div class="panel">
+          <table class="data-table" id="ordersTable"></table>
+        </div>
+      </div>
+
+      <!-- ===== EARNINGS ===== -->
+      <div class="view" id="view-earnings">
+        <div class="view-header">
+          <h1>Earnings</h1>
+          <p>Track your income and payouts</p>
+        </div>
+
+        <div class="earnings-summary">
+          <div class="earnings-card">
+            <div class="earnings-label">Available Balance</div>
+            <div class="earnings-value" id="availableBalance">—</div>
+            <button class="btn-primary" onclick="requestPayout()">Request Payout</button>
+          </div>
+          <div class="earnings-card">
+            <div class="earnings-label">Pending Clearance</div>
+            <div class="earnings-value" id="pendingBalance">—</div>
+            <span class="earnings-note">Clears in 7 days</span>
+          </div>
+          <div class="earnings-card">
+            <div class="earnings-label">Lifetime Earnings</div>
+            <div class="earnings-value" id="lifetimeBalance">—</div>
+            <span class="earnings-note">Since joining</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">&#128203; Payout History</div>
+          <table class="data-table" id="payoutsTable"></table>
+        </div>
+      </div>
+
+      <!-- ===== REVIEWS ===== -->
+      <div class="view" id="view-reviews">
+        <div class="view-header">
+          <h1>Customer Reviews</h1>
+          <p>See what customers say about your products</p>
+        </div>
+        <div class="panel">
+          <div class="reviews-list" id="sellerReviewsList"></div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS ===== -->
+      <div class="view" id="view-settings">
+        <div class="view-header">
+          <h1>Store Settings</h1>
+          <p>Update your store information</p>
+        </div>
+        <div class="panel">
+          <form class="settings-form" onsubmit="saveSellerSettings(event)">
+            <div class="form-row">
+              <div class="form-field">
+                <label>Store Name</label>
+                <input type="text" value="John's Store" id="storeName"/>
+              </div>
+              <div class="form-field">
+                <label>Contact Email</label>
+                <input type="email" value="john@megaads.com" id="storeEmail"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Phone Number</label>
+                <input type="tel" value="+256 700 000 000" id="storePhone"/>
+              </div>
+              <div class="form-field">
+                <label>Business Country</label>
+                <select id="storeCountry">
+                  <option>Uganda</option>
+                  <option>Kenya</option>
+                  <option>Nigeria</option>
+                  <option>Ghana</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field full">
+              <label>Store Description</label>
+              <textarea id="storeDesc">Quality products at honest prices, shipped fast.</textarea>
+            </div>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="productOverlay" onclick="closeProductModal()"></div>
+  <div class="seller-modal" id="productModal">
+    <div class="modal-header">
+      <h3 id="productModalTitle">Add New Product</h3>
+      <button onclick="closeProductModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <div class="form-field full">
+          <label>Product Name</label>
+          <input type="text" id="pName" required placeholder="e.g. Wireless Bluetooth Earbuds"/>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Price (USD)</label>
+            <input type="number" id="pPrice" required min="0" step="0.01" placeholder="0.00"/>
+          </div>
+          <div class="form-field">
+            <label>Stock Quantity</label>
+            <input type="number" id="pStock" required min="0" placeholder="0"/>
+          </div>
+        </div>
+        <div class="form-field full">
+          <label>Category</label>
+          <select id="pCategory">
+            <option>Clothing</option>
+            <option>Shoes</option>
+            <option>Electronics</option>
+            <option>Beauty</option>
+            <option>Accessories</option>
+            <option>Home & Appliances</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label>Product Image</label>
+          <div class="img-upload-zone" id="imgUploadZone" onclick="document.getElementById('pImageFile').click()">
+            <img id="pImagePreview" style="display:none"/>
+            <span id="imgUploadPlaceholder">&#128247; Click to upload image</span>
+          </div>
+          <input type="file" id="pImageFile" accept="image/*" style="display:none" onchange="previewProductImage(this)"/>
+        </div>
+        <div class="form-field full">
+          <label>Description</label>
+          <textarea id="pDesc" placeholder="Describe your product..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary full-width">Save Product</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="js/seller-data.js"></script>
+  <script src="js/seller.js"></script>
+</body>
+</html>

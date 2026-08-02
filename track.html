@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Your Order — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/track.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+    <div class="topbar-left">
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="homeGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#homeGradTopbarIdx)">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </g>
+            </svg>
+          </span>
+        </a>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>Login | Register
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Save big on our app</a>
+        <a href="#">&#127757; Choose your country &#9662;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Online Shopping Mall</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="What are you looking for?"/>
+        <button onclick="window.location.href='index.html'">Search</button>
+      </div>
+      <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+  <span class="icon-cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="cartGradIdxHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#cartGradIdxHeader)">
+        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </g>
+    </svg>
+  </span>
+  <span id="cartCount">0</span>
+</button>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">
+  <span class="icon-inline">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  </span>
+</a>
+      <a href="store.html">Store</a>
+      <a href="#">About us</a>
+      <a href="#">Business Partnership</a>
+      <a href="#">Contact us</a>
+      <a href="product.html">Products</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SEARCH BOX -->
+    <div class="track-search-panel">
+      <div class="track-search-icon">&#128230;</div>
+      <h1>Track Your Order</h1>
+      <p>Enter your Order ID and email to see real-time delivery status</p>
+
+      <form id="trackForm" class="track-form" onsubmit="handleTrack(event)">
+        <input type="text" id="trackOrderId" placeholder="Order ID (e.g. MA-12345678)" required/>
+        <input type="email" id="trackEmail" placeholder="Email used at checkout" required/>
+        <button type="submit">&#128269; Track Order</button>
+      </form>
+
+      <div class="track-sample">
+        Don't have an order yet? Try sample ID: <button class="sample-btn" onclick="fillSample()">MA-87654321</button>
+      </div>
+    </div>
+
+    <!-- RESULT (hidden until tracked) -->
+    <div class="track-result" id="trackResult" style="display:none">
+
+      <!-- ORDER SUMMARY HEADER -->
+      <div class="order-summary-card">
+        <div class="order-summary-left">
+          <div class="order-id-label">Order ID</div>
+          <div class="order-id-value" id="resultOrderId">—</div>
+          <div class="order-date" id="resultOrderDate">—</div>
+        </div>
+        <div class="order-summary-right">
+          <div class="order-status-badge" id="resultStatusBadge">—</div>
+          <div class="order-eta" id="resultEta">—</div>
+        </div>
+      </div>
+
+      <!-- PROGRESS TRACKER -->
+      <div class="progress-panel">
+        <div class="progress-track" id="progressTrack"></div>
+      </div>
+
+      <!-- TWO COLUMN: ITEMS + SHIPPING INFO -->
+      <div class="track-detail-grid">
+
+        <div class="detail-col">
+          <div class="panel-box">
+            <div class="panel-box-title">&#128722; Items in this Order</div>
+            <div id="orderItemsList"></div>
+            <div class="order-total-row">
+              <span>Total Paid</span>
+              <span id="resultTotal">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-col">
+          <div class="panel-box">
+            <div class="panel-box-title">&#128205; Shipping Address</div>
+            <div class="address-block" id="resultAddress">—</div>
+          </div>
+
+          <div class="panel-box">
+            <div class="panel-box-title">&#128666; Courier Info</div>
+            <div class="courier-row">
+              <span>Carrier</span><span id="resultCarrier">—</span>
+            </div>
+            <div class="courier-row">
+              <span>Tracking No.</span><span id="resultTrackingNo">—</span>
+            </div>
+            <div class="courier-row">
+              <span>Contact</span><span id="resultContact">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="panel-box">
+        <div class="panel-box-title">&#128338; Tracking History</div>
+        <div class="timeline" id="trackingTimeline"></div>
+      </div>
+
+      <div class="track-actions">
+        <button class="btn-secondary" onclick="resetTrack()">&#8592; Track Another Order</button>
+        <a href="index.html" class="btn-primary-link">Continue Shopping</a>
+      </div>
+
+    </div>
+
+    <!-- NOT FOUND STATE -->
+    <div class="track-not-found" id="trackNotFound" style="display:none">
+      <div class="not-found-icon">&#10060;</div>
+      <h3>Order Not Found</h3>
+      <p>We couldn't find an order matching that ID and email. Please double-check and try again.</p>
+      <button class="btn-secondary" onclick="resetTrack()">&#8592; Try Again</button>
+    </div>
+
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div id="mobile-nav">
+    <div class="mnav-items">
+      <button class="mnav-item" onclick="window.location.href='index.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradHome" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradHome)">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </g>
+    </svg>
+  </span>
+</button>
+<button class="mnav-item" onclick="window.location.href='index.html#categories'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradCatIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" style="stop-color:var(--primary)"/>
+              <stop offset="100%" style="stop-color:var(--secondary)"/>
+            </linearGradient></defs>
+      <g stroke="url(#navGradCatIdx)">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </g>
+    </svg>
+  </span>Categories
+</button>
+<button class="mnav-item" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradSearch)">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </g>
+    </svg>
+  </span>Search
+</button>
+
+<!-- cart button here (already covered above) -->
+<button class="mnav-item" onclick="openCart()">
+        <span class="icon-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="cartGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/>
+                <stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#cartGradNav)">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </g>
+          </svg>
+        </span>
+        <span id="cartCountMobile">0</span>
+      </button>
+
+<button class="mnav-item" onclick="window.location.href='login.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradAccountIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradAccountIdx)">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
+    </svg>
+  </span>Account
+</button>
+    </div>
+  </div>  
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Mega Ads</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <a href="#">Help Center</a>
+        <a href="track.html">Track My Order</a>
+        <a href="#">Returns &amp; Refunds</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sell With Us</h4>
+        <a href="seller/index.html">Become a Seller</a>
+        <a href="seller/index.html">Seller Center</a>
+        <a href="#">Business Ads</a>
+        <a href="#">Affiliate Program</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <a href="#">&#128280; Facebook</a>
+        <a href="#">&#128248; Instagram</a>
+        <a href="#">&#128038; Twitter / X</a>
+        <a href="#">&#9654; YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Mega Ads Online Shopping Mall. All rights reserved.
+    </div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/track.js"></script>
+</body>
+</html>

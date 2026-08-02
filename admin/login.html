@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — Mega Ads</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="../manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="../images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="../images/icons/icon-192.png"/>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #4f8ef7 0%, #7b2ff7 100%);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-box {
+      background: #fff; border-radius: 12px; padding: 40px 36px;
+      width: 100%; max-width: 360px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; }
+
+    .logo-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: linear-gradient(135deg, #4f8ef7, #7b2ff7);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 900; font-size: 18px;
+      margin: 0 auto 16px;
+    }
+
+    .logo-icon-img {
+      width: 52px; height: 52px; border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(123,47,247,0.35);
+      display: block; margin: 0 auto 16px;
+    }
+
+    h1 { text-align: center; font-size: 19px; color: #222; margin-bottom: 4px; }
+    .sub { text-align: center; font-size: 13px; color: #888; margin-bottom: 26px; }
+    label { display: block; font-size: 13px; font-weight: 700; color: #444; margin-bottom: 6px; }
+    input {
+      width: 100%; padding: 11px 14px; border: 1px solid #e4e4e4; border-radius: 8px;
+      font-size: 14px; outline: none; margin-bottom: 16px; transition: border .2s;
+    }
+    input:focus { border-color: #7b2ff7; }
+    button {
+      width: 100%; background: linear-gradient(135deg, #4f8ef7, #7b2ff7); color: #fff;
+      border: none; padding: 12px; border-radius: 26px; font-weight: 800; font-size: 14px;
+      cursor: pointer; transition: opacity .2s;
+    }
+    button:hover { opacity: .9; }
+    button:disabled { opacity: .6; cursor: default; }
+    .error {
+      background: #ffe9e9; color: #c0392b; font-size: 13px; font-weight: 600;
+      padding: 10px 12px; border-radius: 8px; margin-bottom: 16px; display: none;
+    }
+    .error.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <img src="../images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+    <h1>Mega Ads Admin</h1>
+    <div class="sub">Sign in to manage products &amp; images</div>
+
+    <div class="error" id="errorMsg"></div>
+
+    <form id="loginForm">
+      <label>Username</label>
+      <input type="text" id="username" autocomplete="username" required/>
+
+      <label>Password</label>
+      <input type="password" id="password" autocomplete="current-password" required/>
+
+      <button type="submit" id="submitBtn">Sign In</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.remove('show');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in…';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value,
+          }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          window.location.href = 'index.html';
+        } else {
+          errorMsg.textContent = data.message || 'Invalid username or password';
+          errorMsg.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Could not reach the server. Is it running?';
+        errorMsg.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    });
+  </script>
+
+</body>
+</html>

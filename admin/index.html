@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mega Ads - Image Manager</title>
+  <link rel="stylesheet" href="css/admin.css" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="../manifest.json"/>
+<link rel="apple-touch-icon" href="../images/icons/apple-touch-icon.png"/>
+<link rel="icon" href="../images/icons/icon-192.png"/>
+<link rel="icon" href="../images/icons/favicon-32.png" sizes="32x32"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="logo">
+        <img src="../images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Image Manager</span>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-save-all" onclick="saveAllImages()">&#128260; Refresh</button>
+        <a href="../index.html" class="btn-preview" target="_blank">&#128065; Preview Site</a>
+        <button class="btn-preview" onclick="logoutAdmin()">&#128274; Logout</button>
+      </div>
+    </div>            
+  </header>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- SIDEBAR NAV -->
+    <aside class="admin-sidebar">
+      <nav class="admin-nav">
+        <div class="nav-label">Sections</div>
+        <a href="#" class="nav-item active" onclick="showSection('hero')">&#127956; Hero Banners</a>
+        <a href="#" class="nav-item" onclick="showSection('flash')">&#9889; Flash Sale</a>
+        <a href="#" class="nav-item" onclick="showSection('tiles')">&#9724; Category Tiles</a>
+        <a href="#" class="nav-item" onclick="showSection('deals')">&#127873; Today's Deals</a>
+        <div class="nav-label" style="margin-top:16px">Tools</div>
+        <a href="#" class="nav-item" onclick="showSection('bulk')">&#128230; Bulk Upload</a>
+        <a href="#" class="nav-item" onclick="showSection('library')">&#128247; Image Library</a>
+        <a href="#" class="nav-item" onclick="showSection('catalog')">&#128230; Catalog (Unlisted)</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <div class="admin-content">
+
+      <!-- HERO BANNERS -->
+      <div class="section-panel active" id="panel-hero">
+        <div class="panel-header">
+          <h2>&#127956; Hero Banners</h2>
+          <p>These are the 3 rotating slides at the top of the homepage.</p>
+        </div>
+        <div class="cards-grid" id="hero-cards"></div>
+      </div>
+
+      <!-- FLASH SALE -->
+      <div class="section-panel" id="panel-flash">
+        <div class="panel-header">
+          <h2>&#9889; Flash Sale Products</h2>
+          <p>Products shown in the flash sale scrolling strip.</p>
+        </div>
+        <div class="panel-toolbar">
+          <button class="btn-add" onclick="addFlashProduct()">&#43; Add Product</button>
+        </div>
+        <div class="cards-grid" id="flash-cards"></div>
+      </div>
+
+      <!-- CATEGORY TILES -->
+      <div class="section-panel" id="panel-tiles">
+        <div class="panel-header">
+          <h2>&#9724; Category Tiles</h2>
+          <p>The 4 quick-access category banners below the hero.</p>
+        </div>
+        <div class="cards-grid" id="tiles-cards"></div>
+      </div>
+
+      <!-- TODAY'S DEALS -->
+      <div class="section-panel" id="panel-deals">
+        <div class="panel-header">
+          <h2>&#127873; Today's Deals</h2>
+          <p>All products in the main deals grid.</p>
+        </div>
+        <div class="panel-toolbar">
+          <button class="btn-add" onclick="addDeal()">&#43; Add Product</button>
+          <input type="text" class="search-input" placeholder="&#128269; Search products..." oninput="filterDeals(this.value)"/>
+        </div>
+        <div class="cards-grid" id="deals-cards"></div>
+      </div>
+
+      <div class="section-panel" id="panel-catalog">
+  <div class="panel-header">
+    <h2>&#128230; Catalog Products</h2>
+    <p>Stored and fully searchable, but never shown on the homepage automatically — use this for products you're not ready to feature yet.</p>
+  </div>
+  <div class="panel-toolbar">
+    <button class="btn-add" onclick="addCatalogProduct()">&#43; Add Product</button>
+    <input type="text" class="search-input" placeholder="&#128269; Search catalog..." oninput="filterCatalog(this.value)"/>
+  </div>
+  <div class="cards-grid" id="catalog-cards"></div>
+</div>
+
+      <!-- BULK UPLOAD -->
+      <div class="section-panel" id="panel-bulk">
+        <div class="panel-header">
+          <h2>&#128230; Bulk Image Upload</h2>
+          <p>Drop multiple images at once and assign them to products.</p>
+        </div>
+        <div class="bulk-drop-zone" id="bulkDropZone">
+          <div class="drop-icon">&#128247;</div>
+          <p>Drag &amp; drop images here</p>
+          <span>or</span>
+          <label class="btn-upload-bulk">
+            Choose Files
+            <input type="file" multiple accept="image/*" onchange="handleBulkUpload(this.files)" style="display:none"/>
+          </label>
+        </div>
+        <div class="bulk-previews" id="bulkPreviews"></div>
+      </div>
+
+      <!-- IMAGE LIBRARY -->
+      <div class="section-panel" id="panel-library">
+        <div class="panel-header">
+          <h2>&#128247; Image Library</h2>
+          <p>All images you have uploaded or linked, ready to reuse.</p>
+        </div>
+        <div class="panel-toolbar">
+          <input type="text" class="search-input" placeholder="&#128269; Search library..." oninput="filterLibrary(this.value)"/>
+          <button class="btn-add" onclick="clearLibrary()">&#128465; Clear Library</button>
+        </div>
+        <div class="library-grid" id="libraryGrid"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IMAGE EDITOR MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Edit Image</h3>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- CURRENT IMAGE PREVIEW -->
+      <div class="modal-preview-wrap">
+        <div class="modal-preview" id="modalPreview">
+          <span id="modalEmoji" style="font-size:64px"></span>
+          <img id="modalPreviewImg" src="" alt="" style="display:none;max-width:100%;max-height:220px;border-radius:8px;object-fit:contain"/>
+        </div>
+        <div class="modal-preview-label">Current Image</div>
+      </div>
+
+      <!-- TABS -->
+      <div class="modal-tabs">
+        <button class="tab active" onclick="switchTab('url', this)">&#127758; Image URL</button>
+        <button class="tab" onclick="switchTab('upload', this)">&#128190; Upload File</button>
+        <button class="tab" onclick="switchTab('library', this)">&#128247; Library</button>
+      </div>
+
+      <!-- TAB: URL -->
+      <div class="tab-panel active" id="tab-url">
+        <label>Paste an image URL:</label>
+        <input type="text" id="urlInput" placeholder="https://example.com/image.jpg" oninput="previewFromUrl(this.value)"/>
+        <div class="url-hint">Works with any public image link (HTTPS recommended)</div>
+      </div>
+
+      <!-- TAB: UPLOAD -->
+      <div class="tab-panel" id="tab-upload">
+        <label>Upload from your device:</label>
+        <div class="file-drop-zone" id="fileDropZone">
+          <span>&#128247;</span>
+          <p>Drag &amp; drop image here</p>
+          <label class="btn-choose">
+            Choose Image
+            <input type="file" accept="image/*" onchange="handleFileUpload(this)" style="display:none"/>
+          </label>
+        </div>
+      </div>
+
+      <!-- TAB: LIBRARY -->
+      <div class="tab-panel" id="tab-library">
+        <label>Pick from your saved images:</label>
+        <div class="mini-library" id="miniLibrary"></div>
+      </div>
+
+      <!-- EXTRA FIELDS -->
+      <div class="modal-fields" id="modalFields"></div>
+
+      <!-- ALTERNATE IMAGES / GALLERY — flash & deals products only -->
+<div class="modal-gallery-section" id="modalGallerySection" style="display:none">
+  <label>Alternate Images <span style="font-weight:400;color:#999">(different colors, extra angles, etc.)</span></label>
+  <div class="modal-gallery-grid" id="modalGalleryGrid"></div>
+  <div class="modal-gallery-add">
+    <input
+      type="text"
+      id="galleryUrlInput"
+      placeholder="Paste image URL and press Enter"
+      onkeydown="if(event.key==='Enter'){event.preventDefault(); addGalleryImage(this.value.trim());}"
+    />
+    <label class="btn-choose-small">
+      Upload
+      <input type="file" accept="image/*" onchange="handleGalleryFileUpload(this)" style="display:none"/>
+    </label>
+  </div>
+</div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-apply" onclick="applyImage()">&#10003; Apply Image</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script src="js/admin-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

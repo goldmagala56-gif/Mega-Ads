@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Help &amp; Services — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/services.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="homeGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#homeGradTopbarIdx)">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </g>
+            </svg>
+          </span>
+        </a>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>Login | Register
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Saving big with us</a>
+        <a href="#">&#127757; Choose your country &#9662;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Online Shopping Mall</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="What are you looking for?" id="searchInput"/>
+        <button onclick="window.location.href='index.html'">Search</button>
+      </div>
+      <div class="header-actions">
+                <button class="cart-btn" onclick="openCart()">
+  <span class="icon-cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="cartGradIdxHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#cartGradIdxHeader)">
+        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </g>
+    </svg>
+  </span>
+  (<span id="cartCount">0</span>)
+</button>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+             <a href="index.html">
+                <span class="icon-inline">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </span>
+              </a>
+      <a href="store.html">Store</a>
+      <a href="#">About us</a>
+      <a href="partnership.html">Business Partnership</a>
+      <a href="services.html" class="active">Help &amp; Services</a>
+      <a href="product.html">Products</a>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- ===== HELP HERO ===== -->
+    <div class="help-hero">
+      <div class="help-hero-inner">
+        <h1>How can we help you today?</h1>
+        <p>Search our help topics, or jump straight to what you need below.</p>
+        <div class="help-search">
+          <span class="help-search-icon">&#128269;</span>
+          <input type="text" id="helpSearchInput" placeholder="Try &quot;refund&quot;, &quot;delivery time&quot;, &quot;mobile money&quot;..." oninput="handleHelpSearch(this.value)"/>
+        </div>
+        <div class="help-hero-tags">
+          <span onclick="quickSearch('delivery time')">Delivery time</span>
+          <span onclick="quickSearch('refund')">Refunds</span>
+          <span onclick="quickSearch('mobile money')">Mobile Money</span>
+          <span onclick="quickSearch('track')">Track order</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SERVICE CATEGORY GRID ===== -->
+    <div class="service-section">
+      <div class="section-heading">
+        <span class="deals-dot">&#9679;</span>
+        <span class="section-title">Browse by Topic</span>
+      </div>
+
+      <div class="service-grid" id="serviceGrid">
+
+        <a class="service-card" href="track.html">
+          <div class="service-icon sc-blue">&#128230;</div>
+          <div class="service-name">Track My Order</div>
+          <div class="service-desc">See exactly where your package is, in real time.</div>
+        </a>
+
+        <a class="service-card" href="#faq-shipping" onclick="filterFaq('shipping')">
+          <div class="service-icon sc-teal">&#128666;</div>
+          <div class="service-name">Shipping &amp; Delivery</div>
+          <div class="service-desc">Delivery times, costs, and coverage areas.</div>
+        </a>
+
+        <a class="service-card" href="#faq-payments" onclick="filterFaq('payments')">
+          <div class="service-icon sc-purple">&#128179;</div>
+          <div class="service-name">Payments &amp; Billing</div>
+          <div class="service-desc">Cards, Mobile Money, bank transfer, and COD.</div>
+        </a>
+
+        <a class="service-card" href="#faq-returns" onclick="filterFaq('returns')">
+          <div class="service-icon sc-red">&#128260;</div>
+          <div class="service-name">Returns &amp; Refunds</div>
+          <div class="service-desc">30-day easy returns, start a request in minutes.</div>
+        </a>
+
+        <a class="service-card" href="#faq-account" onclick="filterFaq('account')">
+          <div class="service-icon sc-indigo">&#128274;</div>
+          <div class="service-name">Account &amp; Security</div>
+          <div class="service-desc">Your data, your privacy, your control.</div>
+        </a>
+
+        <a class="service-card" href="seller/index.html">
+          <div class="service-icon sc-orange">&#127978;</div>
+          <div class="service-name">Become a Seller</div>
+          <div class="service-desc">Open your own store on Mega Ads.</div>
+        </a>
+
+        <a class="service-card" href="#contact">
+          <div class="service-icon sc-green">&#128172;</div>
+          <div class="service-name">Contact Us</div>
+          <div class="service-desc">Reach a real person — email, phone, or chat.</div>
+        </a>
+
+        <a class="service-card" href="https://wa.me/256741969520" target="_blank" rel="noopener">
+          <div class="service-icon sc-whatsapp">&#128241;</div>
+          <div class="service-name">WhatsApp Support</div>
+          <div class="service-desc">Fastest way to reach us, no app switching.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ===== TRUST BAR ===== -->
+    <div class="trust-bar">
+      <div class="trust-item">
+        <div class="trust-icon">&#9989;</div>
+        <div>
+          <strong>Buyer Protection</strong>
+          <span>Full refund if your order doesn't arrive as described.</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128274;</div>
+        <div>
+          <strong>Secure Payments</strong>
+          <span>Every transaction is encrypted and verified.</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128666;</div>
+        <div>
+          <strong>Reliable Delivery</strong>
+          <span>Tracked shipping to 10+ countries.</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128172;</div>
+        <div>
+          <strong>Real Support</strong>
+          <span>A real team, reachable by chat, phone, or email.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <div class="faq-section" id="faq">
+      <div class="section-heading">
+        <span class="deals-dot">&#9679;</span>
+        <span class="section-title">Frequently Asked Questions</span>
+      </div>
+
+      <div class="faq-pills" id="faqPills">
+        <span class="faq-pill active" onclick="filterFaq('all')">All</span>
+        <span class="faq-pill" onclick="filterFaq('shipping')">Shipping</span>
+        <span class="faq-pill" onclick="filterFaq('payments')">Payments</span>
+        <span class="faq-pill" onclick="filterFaq('returns')">Returns</span>
+        <span class="faq-pill" onclick="filterFaq('account')">Account</span>
+      </div>
+
+      <div class="faq-list" id="faqList"></div>
+
+      <div class="faq-empty" id="faqEmpty" style="display:none">
+        No results match your search. Try a different word, or
+        <a href="#contact">contact us directly</a>.
+      </div>
+    </div>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <div class="contact-section" id="contact">
+      <div class="section-heading">
+        <span class="deals-dot">&#9679;</span>
+        <span class="section-title">Still Need Help?</span>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <div class="ci-icon">&#128231;</div>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:goldmagala56@gmail.com">goldmagala56@gmail.com</a>
+              <span>We reply within 24 hours</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">&#128222;</div>
+            <div>
+              <strong>Phone / WhatsApp</strong>
+              <a href="https://wa.me/256741969520" target="_blank" rel="noopener">+256 741 969 520</a>
+              <span>Mon–Sat, 8am–8pm EAT</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">&#128205;</div>
+            <div>
+              <strong>Head Office</strong>
+              <span>Kampala, Uganda</span>
+              <span>Shipping to Uganda, Kenya, Nigeria, Ghana &amp; more</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+          <div class="form-field">
+            <label>Your Name</label>
+            <input type="text" id="cName" required placeholder="Sudais Kim"/>
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" id="cEmail" required placeholder="example@gmail.com"/>
+          </div>
+          <div class="form-field">
+            <label>Subject</label>
+            <select id="cSubject" required>
+              <option value="">Select a topic</option>
+              <option>Order issue</option>
+              <option>Payment issue</option>
+              <option>Return / Refund</option>
+              <option>Seller account</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea id="cMessage" required placeholder="Tell us what's going on..." rows="4"></textarea>
+          </div>
+          <button type="submit" class="btn-send">Send Message</button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a class="whatsapp-float" href="https://wa.me/256741969520" target="_blank" rel="noopener" title="Chat on WhatsApp">&#128241;</a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Mega Ads</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <a href="services.html">Help Center</a>
+        <a href="track.html">Track My Order</a>
+        <a href="services.html#faq-returns">Returns &amp; Refunds</a>
+        <a href="services.html#contact">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sell With Us</h4>
+        <a href="seller/index.html">Become a Seller</a>
+        <a href="seller/index.html">Seller Center</a>
+        <a href="partnership.html#apply">Business Ads</a>
+        <a href="partnership.html#apply">Affiliate Program</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <a href="#">&#128280; Facebook</a>
+        <a href="#">&#128248; Instagram</a>
+        <a href="#">&#128038; Twitter / X</a>
+        <a href="#">&#9654; YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Mega Ads Online Shopping Mall. All rights reserved.
+    </div>
+  </footer>
+
+<!-- MOBILE BOTTOM NAV -->
+  <div id="mobile-nav">
+    <div class="mnav-items">
+      <button class="mnav-item" onclick="window.location.href='index.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradHome" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradHome)">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </g>
+    </svg>
+  </span>
+</button>
+<button class="mnav-item" onclick="window.location.href='index.html#categories'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradCatIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" style="stop-color:var(--primary)"/>
+              <stop offset="100%" style="stop-color:var(--secondary)"/>
+            </linearGradient></defs>
+      <g stroke="url(#navGradCatIdx)">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </g>
+    </svg>
+  </span>Categories
+</button>
+<button class="mnav-item" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradSearch)">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </g>
+    </svg>
+  </span>Search
+</button>
+
+<!-- cart button here (already covered above) -->
+<button class="mnav-item" onclick="openCart()">
+        <span class="icon-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="cartGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/>
+                <stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#cartGradNav)">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </g>
+          </svg>
+        </span>
+        <span id="cartCountMobile">0</span>
+      </button>
+
+<button class="mnav-item" onclick="window.location.href='login.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradAccountIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradAccountIdx)">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
+    </svg>
+  </span>Account
+</button>
+    </div>
+  </div>  
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/pwa-register.js"></script>
+</body>
+</html>

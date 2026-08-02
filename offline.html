@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You're Offline — Mega Ads</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #4f8ef7 0%, #7b2ff7 100%);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 20px;
+    }
+    .box { background: #fff; border-radius: 12px; padding: 40px 32px; max-width: 380px; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+    .icon { font-size: 56px; margin-bottom: 12px; }
+    h1 { font-size: 19px; color: #222; margin-bottom: 8px; }
+    p { font-size: 14px; color: #777; margin-bottom: 22px; line-height: 1.5; }
+    button {
+      background: linear-gradient(135deg, #4f8ef7, #7b2ff7); color: #fff; border: none;
+      padding: 12px 28px; border-radius: 26px; font-weight: 800; font-size: 14px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">&#128246;</div>
+    <h1>You're offline</h1>
+    <p>Looks like there's no internet connection right now. Pages you've already visited may still work.</p>
+    <button onclick="window.location.href='/index.html'">Try Home Page</button>
+  </div>
+</body>
+</html>

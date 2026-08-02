@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/cart.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html">
+            <span class="icon-inline">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs><linearGradient id="homeGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                  <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+                </linearGradient></defs>
+                <g stroke="url(#homeGradTopbarIdx)">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </g>
+              </svg>
+            </span>
+          </a>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>Login | Register
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Save big on our app</a>
+        <a href="#">&#127757; Choose your country &#9662;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Online Shopping Mall</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="What are you looking for?" id="searchInput"/>
+        <button onclick="window.location.href='index.html'">Search</button>
+      </div>
+      <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+          <span class="icon-cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="cartGradIdxHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#cartGradIdxHeader)">
+                <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </g>
+            </svg>
+          </span>
+          Cart <span id="cartCount">0</span>
+        </button>
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">
+        <span class="icon-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </span>
+      </a>
+      <a href="store.html">Store</a>
+      <a href="#">About us</a>
+      <a href="partnership.html">Business Partnership</a>
+      <a href="services.html">Help &amp; Services</a>
+      <a href="product.html">Products</a>
+
+    </div>
+  </nav>
+
+  <!-- STEP TRACKER -->
+  <div class="steps-bar">
+    <div class="steps-inner">
+      <div class="step active" id="step1">
+        <span class="step-num">1</span><span class="step-label">Cart</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step2">
+        <span class="step-num">2</span><span class="step-label">Shipping</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step3">
+        <span class="step-num">3</span><span class="step-label">Payment</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step4">
+        <span class="step-num">4</span><span class="step-label">Confirmation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- ===== STAGE 1: CART VIEW ===== -->
+    <div class="stage active" id="stage-cart">
+
+      <div class="cart-layout">
+
+        <!-- LEFT: ITEMS -->
+        <div class="cart-items-col">
+          <div class="cart-panel">
+           <div class="panel-title">
+            <span class="icon-cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs><linearGradient id="cartGradPanelTitle" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+                </linearGradient></defs>
+                <g stroke="url(#cartGradPanelTitle)">
+                  <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </g>
+              </svg>
+            </span>
+            Shopping Cart (<span id="cartItemCount">0</span> items)
+          </div>
+            <div id="cartItemsList"></div>
+            <div class="cart-empty" id="cartEmptyMsg" style="display:none">
+              <div class="empty-icon">
+                <span class="icon-cart-xl">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <defs><linearGradient id="cartGradEmpty" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+                    </linearGradient></defs>
+                    <g stroke="url(#cartGradEmpty)">
+                      <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </g>
+                  </svg>
+                </span>
+              </div>
+              <p>Your cart is empty</p>
+              <a href="index.html" class="btn-continue">Continue Shopping &#8594;</a>
+            </div>
+          </div>
+
+          <!-- CURRENCY -->
+          <div class="cart-panel">
+            <div class="panel-title">&#127758; Display Currency</div>
+            <div class="currency-pills" id="currencyPillsCart"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SUMMARY -->
+        <div class="cart-summary-col">
+          <div class="summary-panel">
+            <div class="panel-title">Order Summary</div>
+            <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">—</span></div>
+            <div class="summary-row"><span>Shipping</span><span id="sumShipping">—</span></div>
+            <div class="summary-row promo-row">
+              <input type="text" id="promoInput" placeholder="Promo code"/>
+              <button onclick="applyPromo()">Apply</button>
+            </div>
+            <div class="summary-row promo-applied" id="promoApplied" style="display:none">
+              <span>Discount</span><span id="sumDiscount">—</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row"><span>Total</span><span id="sumTotal">—</span></div>
+            <button class="btn-checkout" onclick="goToStage('shipping')">Proceed to Checkout &#8594;</button>
+            <div class="trust-badges">
+              <span>&#128274; Secure Checkout</span>
+              <span>&#128230; Free Returns</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== STAGE 2: SHIPPING ===== -->
+    <div class="stage" id="stage-shipping">
+      <div class="form-layout">
+        <div class="form-col">
+          <div class="cart-panel">
+            <div class="panel-title">&#128205; Shipping Address</div>
+            <form id="shippingForm" class="form-grid">
+              <div class="form-field full">
+                <label>Full Name</label>
+                <input type="text" id="shipName" required placeholder="John Doe"/>
+              </div>
+              <div class="form-field">
+                <label>Phone Number</label>
+                <input type="tel" id="shipPhone" required placeholder="+256 700 000 000"/>
+              </div>
+              <div class="form-field">
+                <label>Email Address</label>
+                <input type="email" id="shipEmail" required placeholder="you@example.com"/>
+              </div>
+              <div class="form-field full">
+                <label>Street Address</label>
+                <input type="text" id="shipAddress" required placeholder="123 Main Street"/>
+              </div>
+              <div class="form-field">
+                <label>City</label>
+                <input type="text" id="shipCity" required placeholder="Kampala"/>
+              </div>
+              <div class="form-field">
+                <label>Country</label>
+                <select id="shipCountry" required>
+                  <option value="">Select country</option>
+                  <option>Uganda</option>
+                  <option>Kenya</option>
+                  <option>Nigeria</option>
+                  <option>Ghana</option>
+                  <option>United States</option>
+                  <option>United Kingdom</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-field full">
+                <label>Delivery Notes (optional)</label>
+                <textarea id="shipNotes" placeholder="Apartment number, landmark, etc."></textarea>
+              </div>
+            </form>
+
+            <div class="shipping-options">
+              <div class="panel-title" style="margin-top:18px">&#128666; Delivery Speed</div>
+              <label class="ship-option selected" onclick="selectShipping(this, 0)">
+                <input type="radio" name="ship" checked/>
+                <div><strong>Standard Delivery</strong><span>7–14 business days</span></div>
+                <div class="ship-price">Free</div>
+              </label>
+              <label class="ship-option" onclick="selectShipping(this, 4.99)">
+                <input type="radio" name="ship"/>
+                <div><strong>Express Delivery</strong><span>3–5 business days</span></div>
+                <div class="ship-price">$4.99</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-col-side">
+          <div class="summary-panel">
+            <div class="panel-title">Order Summary</div>
+            <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal2">—</span></div>
+            <div class="summary-row"><span>Shipping</span><span id="sumShipping2">—</span></div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row"><span>Total</span><span id="sumTotal2">—</span></div>
+            <button class="btn-checkout" onclick="proceedToPayment()">Continue to Payment &#8594;</button>
+            <button class="btn-back" onclick="goToStage('cart')">&#8592; Back to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STAGE 3: PAYMENT ===== -->
+    <div class="stage" id="stage-payment">
+      <div class="form-layout">
+        <div class="form-col">
+          <div class="cart-panel">
+            <div class="panel-title">&#128179; Payment Method</div>
+
+            <div class="payment-methods">
+              <label class="pay-option selected" onclick="selectPayment(this,'card')">
+                <input type="radio" name="pay" checked/>
+                <span class="pay-icon">&#128179;</span>
+                <span>Credit / Debit Card</span>
+              </label>
+              <label class="pay-option" onclick="selectPayment(this,'mobile')">
+                <input type="radio" name="pay"/>
+                <span class="pay-icon">&#128241;</span>
+                <span>Mobile Money</span>
+              </label>
+              <label class="pay-option" onclick="selectPayment(this,'banktransfer')">
+                <input type="radio" name="pay"/>
+                <span class="pay-icon">&#127974;</span>
+                <span>Bank Transfer</span>
+              </label>
+              <label class="pay-option" onclick="selectPayment(this,'cod')">
+                <input type="radio" name="pay"/>
+                <span class="pay-icon">&#128176;</span>
+                <span>Cash on Delivery</span>
+              </label>
+            </div>
+
+            <div class="payment-fields" id="fields-card">
+              <p class="payment-note">&#128274; You'll enter your card details in Flutterwave's secure payment window. Mega Ads never sees or stores your card number.</p>
+            </div>
+
+            <div class="payment-fields" id="fields-mobile" style="display:none">
+              <div class="form-grid">
+                <div class="form-field full">
+                  <label>Mobile Money Number</label>
+                  <input type="tel" id="mobileMoneyPhone" placeholder="+256 700 000 000"/>
+                </div>
+              </div>
+              <p class="payment-note">&#128274; Flutterwave will send a prompt to this number to approve the payment. We never see or store your PIN.</p>
+            </div>
+
+            <div class="payment-fields" id="fields-banktransfer" style="display:none">
+              <p class="payment-note">You'll be given secure bank transfer details from Flutterwave to complete this payment.</p>
+            </div>
+
+            <div class="payment-fields" id="fields-cod" style="display:none">
+              <p class="payment-note">Pay with cash when your order arrives. Please have the exact amount ready.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-col-side">
+          <div class="summary-panel">
+            <div class="panel-title">Order Summary</div>
+            <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal3">—</span></div>
+            <div class="summary-row"><span>Shipping</span><span id="sumShipping3">—</span></div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row"><span>Total</span><span id="sumTotal3">—</span></div>
+            <button class="btn-checkout" onclick="placeOrder()">&#128274; Place Order</button>
+            <button class="btn-back" onclick="goToStage('shipping')">&#8592; Back to Shipping</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STAGE 4: CONFIRMATION ===== -->
+    <div class="stage" id="stage-confirmation">
+      <div class="confirm-box">
+        <div class="confirm-icon">&#9989;</div>
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for shopping with Mega Ads. A confirmation email has been sent to you.</p>
+        <div class="confirm-id">Order ID: <strong id="orderId">—</strong></div>
+        <div class="confirm-total">Total Paid: <strong id="confirmTotal">—</strong></div>
+        <div class="confirm-actions">
+          <a href="index.html" class="btn-continue">Continue Shopping</a>
+          <button class="btn-back" onclick="window.print()">&#128424; Print Receipt</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toast"></div>
+    <!-- MOBILE BOTTOM NAV -->
+  <div id="mobile-nav">
+    <div class="mnav-items">
+      <button class="mnav-item" onclick="window.location.href='index.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradHome" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradHome)">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </g>
+    </svg>
+  </span>
+</button>
+<button class="mnav-item" onclick="window.location.href='index.html#categories'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradCatIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" style="stop-color:var(--primary)"/>
+              <stop offset="100%" style="stop-color:var(--secondary)"/>
+            </linearGradient></defs>
+      <g stroke="url(#navGradCatIdx)">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </g>
+    </svg>
+  </span>Categories
+</button>
+<button class="mnav-item" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradSearch)">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </g>
+    </svg>
+  </span>Search
+</button>
+
+<!-- cart button here (already covered above) -->
+<button class="mnav-item" onclick="openCart()">
+        <span class="icon-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="cartGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/>
+                <stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#cartGradNav)">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </g>
+          </svg>
+        </span>
+        <span id="cartCountMobile">0</span>
+      </button>
+
+<button class="mnav-item" onclick="window.location.href='login.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradAccountIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradAccountIdx)">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
+    </svg>
+  </span>Account
+</button>
+    </div>
+  </div>  
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/pwa-register.js"></script>
+</body>
+</html>

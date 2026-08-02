@@ -1,0 +1,231 @@
+/* =====================
+   SERVICES / HELP PAGE
+   Extends css/style.css — reuses the same design tokens (--primary,
+   --secondary, --gradient, --radius, --shadow, etc.) so this page feels
+   like part of the site, not a bolt-on.
+   ===================== */
+
+/* =====================
+   HELP HERO
+   ===================== */
+.help-hero {
+  background: var(--gradient);
+  border-radius: var(--radius);
+  padding: 56px 32px 64px;
+  text-align: center;
+  color: #fff;
+  margin-top: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.help-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 15% 20%, rgba(255,255,255,0.14), transparent 40%),
+              radial-gradient(circle at 85% 80%, rgba(255,255,255,0.10), transparent 40%);
+  pointer-events: none;
+}
+.help-hero-inner { position: relative; max-width: 620px; margin: 0 auto; }
+.help-hero h1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40px; font-weight: 900; margin-bottom: 10px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.help-hero p { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 26px; }
+
+.help-search {
+  background: #fff; border-radius: 30px; padding: 6px 8px 6px 20px;
+  display: flex; align-items: center; gap: 10px;
+  max-width: 480px; margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.help-search-icon { font-size: 17px; opacity: .5; }
+.help-search input {
+  flex: 1; border: none; outline: none; padding: 12px 0;
+  font-size: 17px; color: var(--text); background: transparent;
+}
+
+.help-hero-tags { margin-top: 18px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.help-hero-tags span {
+  background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.35);
+  color: #fff; font-size: 15px; font-weight: 600; padding: 6px 14px;
+  border-radius: 20px; cursor: pointer; transition: background .2s;
+}
+.help-hero-tags span:hover { background: rgba(255,255,255,0.3); }
+
+/* =====================
+   SECTION HEADING (shared)
+   ===================== */
+.section-heading {
+  display: flex; align-items: center; gap: 10px;
+  margin: 40px 0 18px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.section-title { font-size: 27px; font-weight: 900; color: var(--text); font-family: Times New Roman; }
+/* =====================
+   SERVICE CATEGORY GRID
+   ===================== */
+.service-section { margin-top: 8px; }
+.service-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.service-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px 18px; box-shadow: var(--shadow); text-align: left;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  display: block;
+}
+.service-card:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: #cbb8ff;
+}
+.service-icon {
+  width: 50px; height: 50px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; margin-bottom: 14px; color: #fff;
+}
+.sc-blue      { background: linear-gradient(135deg, #4f8ef7, #2563eb); }
+.sc-teal      { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.sc-purple    { background: linear-gradient(135deg, #9b59b6, #7b2ff7); }
+.sc-red       { background: linear-gradient(135deg, #ff5f6d, #c0392b); }
+.sc-indigo    { background: linear-gradient(135deg, #667eea, #764ba2); }
+.sc-orange    { background: linear-gradient(135deg, #f7971e, #e65c00); }
+.sc-green     { background: linear-gradient(135deg, #56ab2f, #1c7a2e); }
+.sc-whatsapp  { background: linear-gradient(135deg, #25D366, #128C4A); }
+
+.service-name { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 6px; font-family: Times New Roman; }
+.service-desc { font-size: 16px;font-weight: 550; color: rgb(132, 147, 156); line-height: 1.5;font-family: Georgia, 'Times New Roman', Times, serif;   }
+
+/* =====================
+   TRUST BAR
+   ===================== */
+.trust-bar {
+  margin-top: 34px; background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.trust-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 20px; border-right: 1px solid #f0f0f0;
+}
+.trust-item:last-child { border-right: none; }
+.trust-icon { font-size: 25px; flex-shrink: 0; }
+.trust-item strong { display: block; font-size: 15.3px; color: var(--secondary); margin-bottom: 3px; font-family:  Cambria, Cochin, Georgia, Times, 'Times New Roman', serif }
+.trust-item span { font-size: 16px;font-weight: 500; color: var(--muted); line-height: 1.5;font-family: Georgia, 'Times New Roman', Times, serif; }
+
+/* =====================
+   FAQ SECTION
+   ===================== */
+.faq-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.faq-pill {
+  background: #fff; border: 1px solid var(--border); color: #7e6767;
+  padding: 7px 16px; border-radius: 20px; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+}
+.faq-pill:hover { border-color: var(--secondary); color: var(--secondary); }
+.faq-pill.active { background: var(--gradient); color: #fff; border-color: transparent; }
+
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.faq-question {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;font-family: Georgia, 'Times New Roman', Times, serif;
+  padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 700; color: rgb(136, 112, 112);
+}
+.faq-question:hover { color: var(--secondary); }
+.faq-caret { font-size: 15px; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+.faq-item.open .faq-caret { transform: rotate(180deg); color: var(--secondary); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease;
+  padding: 0 20px; font-size: 15px; color: var(--muted); line-height: 1.7;
+}
+.faq-item.open .faq-answer { max-height: 300px; padding: 0 20px 18px; }
+
+.faq-empty {
+  text-align: center; padding: 32px; color: var(--muted); font-size: 15px;
+  background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius);
+}
+.faq-empty a { color: var(--secondary); font-weight: 700; }
+
+/* =====================
+   CONTACT SECTION
+   ===================== */
+.contact-grid {
+  display: grid; grid-template-columns: 300px 1fr; gap: 18px; align-items: start;
+}
+.contact-info {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 22px; display: flex; flex-direction: column; gap: 22px;
+}
+.contact-info-item { display: flex; gap: 12px; align-items: flex-start; }
+.ci-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.contact-info-item strong { display: block; font-size: 17.22px; color: rgb(81, 102, 150);
+   margin-bottom: 4px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+.contact-info-item a { display: block; font-size: 15px; color: rgb(111, 128, 145);
+   font-weight: 700; margin-bottom: 3px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif }
+.contact-info-item span { display: block; font-size: 14.3px; color: var(--muted); line-height: 1.5; }
+
+.contact-form {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.contact-form .form-field:nth-child(4) { grid-column: 1 / -1; }
+.contact-form label { display: block; font-size: 16px; font-weight: 700; color: #896b6b; margin-bottom: 6px;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+.contact-form input, .contact-form select, .contact-form textarea {
+  width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 16px; outline: none; font-family: inherit; transition: border .2s; resize: vertical;
+}
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--secondary); }
+.btn-send {
+  grid-column: 1 / -1; background: var(--gradient); color: #fff; border: none;
+  padding: 13px; border-radius: 26px; font-weight: 800; font-size: 16px;
+  box-shadow: 0 4px 14px rgba(123,47,247,0.3); transition: opacity .2s, transform .15s;
+}
+.btn-send:hover { opacity: .9; transform: translateY(-1px); }
+
+/* =====================
+   FLOATING WHATSAPP BUTTON
+   ===================== */
+.whatsapp-float {
+  position: fixed; bottom: 24px; right: 16px; z-index: 400;
+  width: 55px; height: 55px; border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C4A);
+  color: #fff; font-size: 25px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(37,211,102,0.45);
+  transition: transform .2s;
+}
+.whatsapp-float:hover { transform: scale(1.08); }
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 1100px) {
+  .service-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 860px) {
+  .whatsapp-float { bottom: 74px; }
+  .trust-bar { grid-template-columns: repeat(2, 1fr); }
+  .trust-item:nth-child(2) { border-right: none; }
+  .trust-item { border-bottom: 1px solid #f0f0f0; }
+}
+
+@media (max-width: 600px) {
+  .help-hero { padding: 40px 20px 48px; }
+  .help-hero h1 { font-size: 27px; }
+  .help-hero p { font-size: 15.5px; }
+  .service-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .service-card { padding: 16px 14px; }
+  .service-icon { width: 38px; height: 38px; font-size: 19.4px; margin-bottom: 10px; }
+  .service-name { font-size: 17px; }
+  .service-desc { font-size: 14.4px; }
+  .trust-bar { grid-template-columns: 1fr; }
+  .trust-item { border-right: none; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-form { grid-template-columns: 1fr; }
+  .contact-form .form-field:nth-child(4) { grid-column: 1; }
+  .section-title { font-size: 20.3px; }
+}

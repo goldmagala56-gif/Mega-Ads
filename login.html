@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login &amp; Register — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/login.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+  <!-- MINI HEADER -->
+  <header class="auth-header">
+    <a href="login.html" class="logo">
+      <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+      <div>
+        <span class="logo-text">Mega Ads</span>
+        <span class="logo-sub">Online Shopping Mall</span>
+      </div>
+    </a>
+    <a href="index.html" class="back-home">&#8592; Back to shopping</a>
+  </header>
+
+  <!-- MAIN -->
+  <div class="auth-wrap">
+
+    <div class="auth-card">
+
+      <!-- LEFT: BRAND PANEL -->
+      <div class="auth-side">
+        <div class="auth-side-content">
+          <div class="auth-side-icon">
+            <span class="icon-cart-lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+            </span>
+          </div>
+          <h2>Welcome to Mega Ads</h2>
+          <p>Shop thousands of products at unbeatable prices, delivered to your door.</p>
+          <ul class="auth-perks">
+            <li>&#127942; Exclusive member discounts</li>
+            <li>&#128666; Track orders in real time</li>
+            <li>&#10084;&#65039; Save items to your wishlist</li>
+            <li>&#9889; Faster checkout every time</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM PANEL -->
+      <div class="auth-form-side">
+
+        <!-- TABS -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab('login', this)">Login</button>
+          <button class="auth-tab" onclick="switchAuthTab('register', this)">Register</button>
+        </div>
+
+        <!-- ===== LOGIN FORM ===== -->
+        <div class="auth-panel active" id="panel-login">
+          <h3>Login to your account</h3>
+          <p class="auth-sub">Enter your details to continue shopping</p>
+
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="field">
+              <label>Email or Phone</label>
+              <input type="text" id="loginEmail" placeholder="you@example.com" required/>
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <div class="password-wrap">
+                <input type="password" id="loginPassword" placeholder="Enter your password" required/>
+                <button type="button" class="toggle-eye" onclick="togglePassword('loginPassword', this)">&#128065;</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label class="remember-me">
+                <input type="checkbox"/> Remember me
+              </label>
+              <a href="#" class="forgot-link" onclick="openForgotModal(); return false;">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn-auth-submit">Login</button>
+          </form>
+
+          <div class="auth-divider"><span>or continue with</span></div>
+
+          <div class="social-buttons">
+            <button class="social-btn" onclick="socialLogin('Google')">&#127760; Google</button>
+            <button class="social-btn" onclick="socialLogin('Facebook')">&#128280; Facebook</button>
+          </div>
+
+          <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('register', document.querySelectorAll('.auth-tab')[1]); return false;">Register now</a></p>
+        </div>
+
+        <!-- ===== REGISTER FORM ===== -->
+        <div class="auth-panel" id="panel-register">
+          <h3>Create your account</h3>
+          <p class="auth-sub">Join thousands of happy shoppers today</p>
+
+          <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="field-grid">
+              <div class="field">
+                <label>Full Name</label>
+                <input type="text" id="regName" placeholder="John Doe" required/>
+              </div>
+              <div class="field">
+                <label>Phone Number</label>
+                <input type="tel" id="regPhone" placeholder="+256 700 000 000" required/>
+              </div>
+            </div>
+            <div class="field">
+              <label>Email Address</label>
+              <input type="email" id="regEmail" placeholder="you@example.com" required/>
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <div class="password-wrap">
+                <input type="password" id="regPassword" placeholder="Create a password" required oninput="checkPasswordStrength(this.value)"/>
+                <button type="button" class="toggle-eye" onclick="togglePassword('regPassword', this)">&#128065;</button>
+              </div>
+              <div class="strength-meter">
+                <div class="strength-bar" id="strengthBar"></div>
+              </div>
+              <span class="strength-label" id="strengthLabel"></span>
+            </div>
+            <div class="field">
+              <label>Confirm Password</label>
+              <input type="password" id="regConfirm" placeholder="Re-enter your password" required/>
+            </div>
+            <label class="terms-check">
+              <input type="checkbox" id="termsCheck" required/>
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </label>
+            <button type="submit" class="btn-auth-submit">Create Account</button>
+          </form>
+
+          <div class="auth-divider"><span>or sign up with</span></div>
+
+          <div class="social-buttons">
+            <button class="social-btn" onclick="socialLogin('Google')">&#127760; Google</button>
+            <button class="social-btn" onclick="socialLogin('Facebook')">&#128280; Facebook</button>
+          </div>
+
+          <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthTab('login', document.querySelectorAll('.auth-tab')[0]); return false;">Login</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div class="modal-overlay" id="forgotOverlay" onclick="closeForgotModal()"></div>
+  <div class="forgot-modal" id="forgotModal">
+    <div class="forgot-header">
+      <h3>Reset Password</h3>
+      <button onclick="closeForgotModal()">&#10005;</button>
+    </div>
+    <div class="forgot-body" id="forgotStep1">
+      <p>Enter the email linked to your account and we'll send you a reset link.</p>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="forgotEmail" placeholder="you@example.com"/>
+      </div>
+      <button class="btn-auth-submit" onclick="sendResetLink()">Send Reset Link</button>
+    </div>
+    <div class="forgot-body" id="forgotStep2" style="display:none">
+      <div class="forgot-success-icon">&#9993;&#65039;</div>
+      <p style="text-align:center;font-weight:700">Check your inbox!</p>
+      <p style="text-align:center">We've sent a password reset link to <strong id="forgotSentTo"></strong></p>
+      <button class="btn-auth-submit" onclick="closeForgotModal()">Done</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

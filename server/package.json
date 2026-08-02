@@ -1,0 +1,17 @@
+{
+  "name": "mega-ads-server",
+  "version": "1.0.0",
+  "description": "Backend for Mega Ads — verifies Flutterwave payments and serves the static site.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.19.0",
+    "multer": "^2.2.0"
+  }
+}

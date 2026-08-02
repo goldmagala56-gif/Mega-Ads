@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business &amp; Partnership — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/partnership.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+<!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="homeGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#homeGradTopbarIdx)">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </g>
+            </svg>
+          </span>
+        </a>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>Login | Register
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Saving big with us</a>
+        <a href="#">Language &#9662;</a>
+        <a href="#">&#127757; Choose your country &#9662;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Online Shopping Mall</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="What are you looking for?" id="searchInput"/>
+        <button onclick="window.location.href='index.html'">Search</button>
+      </div>
+      <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+          <span class="icon-cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="cartGradIdxHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#cartGradIdxHeader)">
+                <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </g>
+            </svg>
+          </span>
+          Cart (<span id="cartCount">0</span>)
+        </button>
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">
+        <span class="icon-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </span>
+      </a>
+      <a href="store.html">Store</a>
+      <a href="#">About us</a>
+      <a href="partnership.html">Business Partnership</a>
+      <a href="services.html">Help &amp; Services</a>
+      <a href="product.html">Products</a>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- ===== PARTNER HERO ===== -->
+    <div class="partner-hero">
+      <div class="partner-hero-inner">
+        <span class="partner-eyebrow">Mega Ads for Business</span>
+        <h1>Grow your business with Mega Ads</h1>
+        <p>Whether you sell products, move packages, or want your brand in front of our buyers — there's a partnership built for you.</p>
+        <div class="partner-hero-ctas">
+          <a href="#apply" class="btn-primary">Apply to Partner &#8594;</a>
+          <a href="seller/index.html" class="btn-secondary">Become a Seller</a>
+        </div>
+      </div>
+      <div class="partner-hero-visual">&#129309;</div>
+    </div>
+
+    <!-- ===== STATS BAR ===== -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">1+</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24–48h</div>
+        <div class="stat-label">Partner Payout Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Currencies Supported</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1-on-1</div>
+        <div class="stat-label">Dedicated Partner Support</div>
+      </div>
+    </div>
+    <p class="stats-note">**Figures shown are illustrative — update with your real, current numbers before publishing.**</p>
+
+    <!-- ===== PARTNERSHIP TYPES ===== -->
+    <div class="section-heading">
+      <span class="deals-dot">&#9679;</span>
+      <span class="section-title">Ways to Partner With Us</span>
+    </div>
+
+    <div class="partner-grid">
+
+      <div class="partner-card">
+        <div class="partner-icon pc-blue">&#127978;</div>
+        <div class="partner-name">Become a Seller</div>
+        <div class="partner-desc">List your products to thousands of buyers. Set your own prices, manage your own stock, get paid directly.</div>
+        <a href="seller/index.html" class="partner-link">Open a Store &#8594;</a>
+      </div>
+
+      <div class="partner-card">
+        <div class="partner-icon pc-purple">&#128200;</div>
+        <div class="partner-name">Advertise With Us</div>
+        <div class="partner-desc">Get your brand featured in our homepage banners, flash sales, and category placements.</div>
+        <a href="#apply" class="partner-link">Discuss Ad Placement &#8594;</a>
+      </div>
+
+      <div class="partner-card">
+        <div class="partner-icon pc-teal">&#128666;</div>
+        <div class="partner-name">Logistics &amp; Delivery</div>
+        <div class="partner-desc">Run a courier or delivery fleet? Partner with us to fulfil orders across your region.</div>
+        <a href="#apply" class="partner-link">Become a Delivery Partner &#8594;</a>
+      </div>
+
+      <div class="partner-card">
+        <div class="partner-icon pc-orange">&#128176;</div>
+        <div class="partner-name">Bulk &amp; Corporate Orders</div>
+        <div class="partner-desc">Buying for your office, event, or organization? Get wholesale pricing on large orders.</div>
+        <a href="#apply" class="partner-link">Request Bulk Pricing &#8594;</a>
+      </div>
+
+      <div class="partner-card">
+        <div class="partner-icon pc-indigo">&#128279;</div>
+        <div class="partner-name">Affiliate Program</div>
+        <div class="partner-desc">Earn commission promoting Mega Ads products on your blog, channel, or social pages.</div>
+        <a href="#apply" class="partner-link">Join the Affiliate Program &#8594;</a>
+      </div>
+
+      <div class="partner-card">
+        <div class="partner-icon pc-green">&#127757;</div>
+        <div class="partner-name">Regional Expansion</div>
+        <div class="partner-desc">Want to bring Mega Ads to a new city or country? Let's talk about regional partnerships.</div>
+        <a href="#apply" class="partner-link">Propose a Region &#8594;</a>
+      </div>
+
+    </div>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <div class="section-heading">
+      <span class="deals-dot">&#9679;</span>
+      <span class="section-title">How It Works</span>
+    </div>
+
+    <div class="steps-row">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Apply</div>
+        <div class="step-desc">Tell us about your business and which partnership fits.</div>
+      </div>
+      <div class="step-arrow">&#8594;</div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Review</div>
+        <div class="step-desc">Our partnerships team reviews your application, usually within 2 business days.</div>
+      </div>
+      <div class="step-arrow">&#8594;</div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Onboard</div>
+        <div class="step-desc">We set up your account, contracts, and payout details together.</div>
+      </div>
+      <div class="step-arrow">&#8594;</div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Grow</div>
+        <div class="step-desc">Go live and start reaching Mega Ads buyers.</div>
+      </div>
+    </div>
+
+    <!-- ===== APPLICATION FORM ===== -->
+    <div class="apply-section" id="apply">
+      <div class="section-heading">
+        <span class="deals-dot">&#9679;</span>
+        <span class="section-title">Apply to Partner</span>
+      </div>
+
+      <div class="apply-grid">
+
+        <div class="apply-info">
+          <h3>Let's build something together</h3>
+          <p>Fill in the form and our partnerships team will get back to you within 2 business days.</p>
+          <div class="apply-info-item">
+            <span class="ai-icon">&#128231;</span>
+            <div><strong>Email</strong><a href="mailto:goldmagala56@gmail.com">goldmagala56@gmail.com</a></div>
+          </div>
+          <div class="apply-info-item">
+            <span class="ai-icon">&#128222;</span>
+            <div><strong>Phone / WhatsApp</strong><a href="https://wa.me/256741969520" target="_blank" rel="noopener">+256 741 969 520</a></div>
+          </div>
+          <div class="apply-info-item">
+            <span class="ai-icon">&#9200;</span>
+            <div><strong>Response Time</strong><span>Within 2 business days</span></div>
+          </div>
+        </div>
+
+        <form class="apply-form" id="applyForm" onsubmit="handleApplySubmit(event)">
+          <div class="form-field">
+            <label>Business / Organization Name</label>
+            <input type="text" id="pBusiness" required placeholder="Your company name"/>
+          </div>
+          <div class="form-field">
+            <label>Contact Person</label>
+            <input type="text" id="pContact" required placeholder="Full name"/>
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" id="pEmail" required placeholder="you@company.com"/>
+          </div>
+          <div class="form-field">
+            <label>Phone Number</label>
+            <input type="tel" id="pPhone" required placeholder="+256 700 000 000"/>
+          </div>
+          <div class="form-field full">
+            <label>Partnership Type</label>
+            <select id="pType" required>
+              <option value="">Select a partnership type</option>
+              <option>Become a Seller</option>
+              <option>Advertise With Us</option>
+              <option>Logistics &amp; Delivery</option>
+              <option>Bulk &amp; Corporate Orders</option>
+              <option>Affiliate Program</option>
+              <option>Regional Expansion</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>Tell us about your business</label>
+            <textarea id="pMessage" required placeholder="What do you do, and how would you like to partner with Mega Ads?" rows="4"></textarea>
+          </div>
+          <button type="submit" class="btn-send">Submit Application</button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Mega Ads</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <a href="services.html">Help Center</a>
+        <a href="track.html">Track My Order</a>
+        <a href="services.html#faq-returns">Returns &amp; Refunds</a>
+        <a href="services.html#contact">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sell With Us</h4>
+        <a href="seller/index.html">Become a Seller</a>
+        <a href="seller/index.html">Seller Center</a>
+        <a href="partnership.html#apply">Business Ads</a>
+        <a href="partnership.html#apply">Affiliate Program</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <a href="#">&#128280; Facebook</a>
+        <a href="#">&#128248; Instagram</a>
+        <a href="#">&#128038; Twitter / X</a>
+        <a href="#">&#9654; YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Mega Ads Online Shopping Mall. All rights reserved.
+    </div>
+  </footer>
+
+<!-- MOBILE BOTTOM NAV -->
+  <div id="mobile-nav">
+    <div class="mnav-items">
+      <button class="mnav-item" onclick="window.location.href='index.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradHome" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradHome)">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </g>
+    </svg>
+  </span>
+</button>
+<button class="mnav-item" onclick="window.location.href='index.html#categories'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradCatIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" style="stop-color:var(--primary)"/>
+              <stop offset="100%" style="stop-color:var(--secondary)"/>
+            </linearGradient></defs>
+      <g stroke="url(#navGradCatIdx)">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </g>
+    </svg>
+  </span>Categories
+</button>
+<button class="mnav-item" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradSearch)">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </g>
+    </svg>
+  </span>Search
+</button>
+
+<!-- cart button here (already covered above) -->
+<button class="mnav-item" onclick="openCart()">
+        <span class="icon-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="cartGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/>
+                <stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#cartGradNav)">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </g>
+          </svg>
+        </span>
+        <span id="cartCountMobile">0</span>
+      </button>
+
+<button class="mnav-item" onclick="window.location.href='login.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradAccountIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradAccountIdx)">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
+    </svg>
+  </span>Account
+</button>
+    </div>
+  </div>  
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/partnership.js"></script>
+  <script src="js/pwa-register.js"></script>
+</body>
+</html>

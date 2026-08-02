@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Detail — Mega Ads</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/product.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#7b2ff7"/>
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png"/>
+  <link rel="icon" href="images/icons/icon-192.png"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="homeGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#homeGradTopbarIdx)">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </g>
+            </svg>
+          </span>
+        </a>
+        <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>Login | Register
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Saving big with us</a>
+        <a href="#">Language &#9662;</a>
+        <a href="#">&#127757; Choose your country &#9662;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/icons/logo-header.png" alt="Mega Ads logo" class="logo-icon-img"/>
+        <div>
+          <span class="logo-text">Mega Ads</span>
+          <span class="logo-sub">Online Shopping Mall</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="What are you looking for?" id="searchInput"/>
+        <button onclick="window.location.href='index.html'">Search</button>
+      </div>
+      <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+            <span class="icon-cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                  <linearGradient id="cartGradHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--primary)"/>
+                    <stop offset="100%" style="stop-color:var(--secondary)"/>
+                  </linearGradient>
+                </defs>
+                <g stroke="url(#cartGradHeader)">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </g>
+              </svg>
+            </span>
+            Cart (<span id="cartCount">0</span>)
+          </button>
+             <a href="login.html">
+          <span class="icon-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="acctGradTopbarIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient></defs>
+              <g stroke="url(#acctGradTopbarIdx)">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </g>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+  <div class="nav-inner">
+    <a href="index.html">
+      <span class="icon-inline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </span>
+    </a>
+    <a href="store.html">Store</a>
+    <a href="#">About us</a>
+    <a href="partnership.html">Business Partnership</a>
+    <a href="services.html">Help &amp; Services</a>
+  </div>
+</nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <a href="index.html">Home</a> &#8250;
+      <a href="#" id="bcCategory">Category</a> &#8250;
+      <span id="bcProduct">Product</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- PRODUCT SECTION -->
+    <div class="product-layout">
+
+      <!-- LEFT: IMAGE GALLERY -->
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="mainImg" src="" alt="Product Image"/>
+          <div class="gallery-badges">
+            <span class="badge-discount" id="badgeDiscount"></span>
+            <span class="badge-hot">&#128293; Hot</span>
+          </div>
+          <button class="zoom-btn" onclick="openZoom()">&#128269; Zoom</button>
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+      </div>
+
+      <!-- RIGHT: PRODUCT INFO -->
+      <div class="product-info">
+
+        <div class="product-brand">Mega Ads Store</div>
+        <h1 class="product-title" id="productTitle">Loading...</h1>
+
+        <div class="product-rating">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          <span class="rating-count">(128 reviews)</span>
+          <span class="sold-count">&#128722; 2.4k sold</span>
+        </div>
+
+        <!-- PRICE -->
+        <div class="price-box">
+          <div class="price-current" id="priceDisplay">—</div>
+          <div class="price-original" id="priceOriginal"></div>
+          <div class="price-saving" id="priceSaving"></div>
+        </div>
+
+        <!-- CURRENCY -->
+        <div class="currency-row">
+          <span>View in:</span>
+          <div class="currency-pills" id="currencyPills"></div>
+        </div>
+
+        <!-- VARIANTS -->
+        <div class="variant-section" id="variantSection"></div>
+
+        <!-- QUANTITY -->
+        <div class="qty-section">
+          <span class="qty-label">Quantity:</span>
+          <div class="qty-controls">
+            <button onclick="changeQty(-1)">&#8722;</button>
+            <span id="qtyVal">1</span>
+            <button onclick="changeQty(1)">&#43;</button>
+          </div>
+          <span class="stock-note" id="stockNote"></span>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="product-actions">
+          <button class="btn-cart" onclick="addToCartPage()">
+            <span class="icon-cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs><linearGradient id="cartGradBtnCart" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+                </linearGradient></defs>
+                <g stroke="url(#cartGradBtnCart)">
+                  <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </g>
+              </svg>
+            </span>
+            Add to Cart
+          </button>
+          <button class="btn-buy"     onclick="buyNow()">&#9889; Buy Now</button>
+          <button class="btn-wishlist" id="wishBtn" onclick="toggleWish()">&#9825; Wishlist</button>
+        </div>
+
+        <!-- DELIVERY -->
+        <div class="delivery-box">
+          <div class="delivery-item">&#128230; <strong>Free Shipping</strong> on orders over $15</div>
+          <div class="delivery-item">&#128260; <strong>Easy Returns</strong> within 30 days</div>
+          <div class="delivery-item">&#128274; <strong>Secure Payment</strong> — buyer protected</div>
+          <div class="delivery-item">&#9201;  <strong>Fast Delivery</strong> — 7 to 14 business days</div>
+        </div>
+
+        <!-- SELLER -->
+        <div class="seller-box">
+          <div class="seller-avatar">&#128104;&#8205;&#128188;</div>
+          <div class="seller-info">
+            <div class="seller-name">Official Mega Ads Store</div>
+            <div class="seller-meta">&#11088; 4.8 &nbsp;|&nbsp; 98% positive feedback &nbsp;|&nbsp; <a href="#">Visit Store &#8594;</a></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TABS: Description / Specs / Reviews -->
+    <div class="product-tabs">
+      <div class="tab-nav">
+        <button class="ptab active" onclick="switchPTab('desc',this)">Description</button>
+        <button class="ptab" onclick="switchPTab('specs',this)">Specifications</button>
+        <button class="ptab" onclick="switchPTab('reviews',this)">Reviews (128)</button>
+      </div>
+
+      <div class="ptab-panel active" id="ptab-desc">
+        <div class="desc-content" id="descContent"></div>
+      </div>
+
+      <div class="ptab-panel" id="ptab-specs">
+        <table class="specs-table" id="specsTable"></table>
+      </div>
+
+      <div class="ptab-panel" id="ptab-reviews">
+        <div class="reviews-summary">
+          <div class="reviews-score">
+            <div class="score-big">4.8</div>
+            <div class="score-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+            <div class="score-count">128 reviews</div>
+          </div>
+          <div class="reviews-bars">
+            <div class="bar-row"><span>5&#9733;</span><div class="bar"><div class="bar-fill" style="width:78%"></div></div><span>78%</span></div>
+            <div class="bar-row"><span>4&#9733;</span><div class="bar"><div class="bar-fill" style="width:14%"></div></div><span>14%</span></div>
+            <div class="bar-row"><span>3&#9733;</span><div class="bar"><div class="bar-fill" style="width:5%"></div></div><span>5%</span></div>
+            <div class="bar-row"><span>2&#9733;</span><div class="bar"><div class="bar-fill" style="width:2%"></div></div><span>2%</span></div>
+            <div class="bar-row"><span>1&#9733;</span><div class="bar"><div class="bar-fill" style="width:1%"></div></div><span>1%</span></div>
+          </div>
+        </div>
+        <div class="reviews-list" id="reviewsList"></div>
+      </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <div class="related-section">
+      <div class="deals-header">
+        <span class="deals-dot">&#9679;</span>
+        <span class="deals-title">You May Also Like</span>
+      </div>
+      <div class="deals-grid" id="relatedGrid"></div>
+    </div>
+
+  </div>
+
+  <!-- ZOOM MODAL -->
+  <div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+    <img id="zoomImg" src="" alt=""/>
+    <button class="zoom-close" onclick="closeZoom()">&#10005;</button>
+  </div>
+
+<!-- MOBILE BOTTOM NAV -->
+  <div id="mobile-nav">
+    <div class="mnav-items">
+      <button class="mnav-item" onclick="window.location.href='index.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradHome" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradHome)">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </g>
+    </svg>
+  </span>
+</button>
+<button class="mnav-item" onclick="window.location.href='index.html#categories'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradCatIdx" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" style="stop-color:var(--primary)"/>
+              <stop offset="100%" style="stop-color:var(--secondary)"/>
+            </linearGradient></defs>
+      <g stroke="url(#navGradCatIdx)">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </g>
+    </svg>
+  </span>Categories
+</button>
+<button class="mnav-item" onclick="document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradSearch)">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </g>
+    </svg>
+  </span>Search
+</button>
+
+<!-- cart button here (already covered above) -->
+<button class="mnav-item" onclick="openCart()">
+        <span class="icon-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="cartGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary)"/>
+                <stop offset="100%" style="stop-color:var(--secondary)"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#cartGradNav)">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </g>
+          </svg>
+        </span>
+        <span id="cartCountMobile">0</span>
+      </button>
+
+<button class="mnav-item" onclick="window.location.href='login.html'">
+  <span class="icon-nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="navGradAccountIdx" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#navGradAccountIdx)">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </g>
+    </svg>
+  </span>Account
+</button>
+    </div>
+  </div>  
+
+  <!-- STICKY MOBILE BUY BAR -->
+  <div class="mobile-buy-bar">
+    <div class="mobile-price" id="mobilePriceBar">—</div>
+    <button class="btn-cart" onclick="addToCartPage()"><span class="icon-cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="cartGradIdxHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--primary)"/><stop offset="100%" style="stop-color:var(--secondary)"/>
+      </linearGradient></defs>
+      <g stroke="url(#cartGradIdxHeader)">
+        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </g>
+    </svg>
+  </span> Add to Cart</button>
+    <button class="btn-buy"  onclick="buyNow()">&#9889; Buy Now</button>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/pwa-register.js"></script>
+</body>
+</html>

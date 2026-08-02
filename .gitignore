@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets
+.env
+.env.local
+server/.env
+
+# Runtime data — regenerated automatically, shouldn't be tracked
+server/data/
+server/uploads/
+server/orders.json
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+
+# Admin's personal image-library shortcuts (localStorage-based, not real data)
