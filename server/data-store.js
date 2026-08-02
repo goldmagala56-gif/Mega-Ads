@@ -12,7 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const HERO_FILE = path.join(DATA_DIR, 'hero.json');
 const TILES_FILE = path.join(DATA_DIR, 'tiles.json');
