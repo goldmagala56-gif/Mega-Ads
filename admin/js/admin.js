@@ -267,13 +267,7 @@ function openModal(section, id) {
   if (gallerySection) {
    gallerySection.style.display = (section === 'flash' || section === 'deals' || section === 'catalog') ? 'block' : 'none';
   }
-  else if (section === 'flash' || section === 'deals' || section === 'catalog') {
-  html = `
-    <div class="field-row"><label>Product Name</label><input id="f-name" value="${item.name || ''}"/></div>
-    <div class="field-row"><label>Price (USD)</label><input id="f-usd" type="number" value="${item.usd || 0}"/></div>
-    ${section === 'deals' ? `<div class="field-row"><label>Discount Badge (e.g. -20%)</label><input id="f-discount" value="${item.discount || ''}"/></div>` : ''}
-  `;
-}
+  
 
   document.getElementById('modal').classList.add('open');
   document.getElementById('modalOverlay').classList.add('open');
@@ -298,7 +292,7 @@ function buildModalFields(section, item) {
     `;
   } else if (section === 'tiles') {
     html = `<div class="field-row"><label>Tile Name</label><input id="f-name" value="${item.name || ''}"/></div>`;
-  } else if (section === 'flash' || section === 'deals') {
+  } else if (section === 'flash' || section === 'deals' || section === 'catalog') {
     html = `
       <div class="field-row"><label>Product Name</label><input id="f-name" value="${item.name || ''}"/></div>
       <div class="field-row"><label>Price (USD)</label><input id="f-usd" type="number" value="${item.usd || 0}"/></div>
@@ -325,6 +319,7 @@ async function applyImage() {
     updates.img = url;
     saveToLibrary(url);
   }
+
 
   const fName     = document.getElementById('f-name');
   const fUsd      = document.getElementById('f-usd');
@@ -362,6 +357,7 @@ async function applyImage() {
     if (section === 'tiles') renderTileCards();
     if (section === 'flash') renderFlashCards();
     if (section === 'deals') renderDealCards();
+    if (section === 'catalog') renderCatalogCards();
 
     closeModal();
     showToast('\u2705 Changes saved!');
@@ -432,6 +428,42 @@ async function uploadAndPreview(file) {
     return null;
   }
 }
+
+async function renderLibrary() {
+  renderLibraryItems(await loadLibrary());
+}
+
+async function filterLibrary(q) {
+  const lib = await loadLibrary();
+  const filtered = q ? lib.filter(u => u.toLowerCase().includes(q.toLowerCase())) : lib;
+  renderLibraryItems(filtered);
+}
+
+async function renderMiniLibrary() {
+  const lib  = await loadLibrary();
+  const mini = document.getElementById('miniLibrary');
+  if (!lib.length) {
+    mini.innerHTML = '<div class="mini-lib-empty">No saved images yet.</div>';
+    return;
+  }
+  mini.innerHTML = lib.map(url => `
+    <div class="mini-lib-item" onclick="pickFromMiniLibrary('${url}')">
+      <img src="${url}" alt="" onerror="this.parentElement.style.display='none'"/>
+    </div>
+  `).join('');
+}
+
+async function clearLibrary() {
+  if (!confirm('Clear entire image library? Product images are NOT deleted.')) return;
+  try {
+    await fetch('/api/library', { method: 'DELETE' });
+    renderLibrary();
+    showToast('\uD83D\uDDD1\uFE0F Library cleared');
+  } catch (e) {
+    showToast('\u274C Could not clear library \u2014 check your connection');
+  }
+}
+
 function renderGalleryGrid() {
   const grid = document.getElementById('modalGalleryGrid');
   if (!grid) return;
@@ -439,17 +471,35 @@ function renderGalleryGrid() {
     grid.innerHTML = '<div class="gallery-empty">No alternate images yet.</div>';
     return;
   }
-  grid.innerHTML = pendingGalleryImages.map((url, i) => `
+  grid.innerHTML = pendingGalleryImages.map((entry, i) => {
+    const img = typeof entry === 'string' ? entry : entry.img;
+    const label = typeof entry === 'string' ? '' : (entry.label || '');
+    const usd = typeof entry === 'string' ? '' : (entry.usd ?? '');
+    return `
     <div class="gallery-thumb-item">
-      <img src="${url}" alt="" onerror="this.parentElement.style.display='none'"/>
+      <img src="${img}" alt="" onerror="this.parentElement.style.display='none'"/>
+      <input type="text" class="gallery-thumb-label" placeholder="Name (optional)" value="${label}"
+             oninput="updateGalleryMeta(${i}, 'label', this.value)"/>
+      <input type="number" class="gallery-thumb-price" placeholder="Price (optional)" value="${usd}"
+             oninput="updateGalleryMeta(${i}, 'usd', this.value)"/>
       <button class="gallery-thumb-remove" onclick="removeGalleryImage(${i})">&#10005;</button>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
+}
+
+function updateGalleryMeta(index, field, value) {
+  const entry = pendingGalleryImages[index];
+  const img = typeof entry === 'string' ? entry : entry.img;
+  const label = typeof entry === 'string' ? '' : (entry.label || '');
+  const usd = typeof entry === 'string' ? '' : (entry.usd ?? '');
+  const updated = { img, label, usd: usd === '' ? null : Number(usd) };
+  updated[field] = field === 'usd' ? (value === '' ? null : Number(value)) : value;
+  pendingGalleryImages[index] = updated;
 }
 
 function addGalleryImage(url) {
   if (!url) return;
-  pendingGalleryImages.push(url);
+  pendingGalleryImages.push({ img: url, label: '', usd: null });
   saveToLibrary(url);
   renderGalleryGrid();
   const input = document.getElementById('galleryUrlInput');
@@ -530,9 +580,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // =====================
 // IMAGE LIBRARY (still localStorage — see admin-data.js note)
 // =====================
-function renderLibrary() {
-  renderLibraryItems(loadLibrary());
-}
 
 function renderLibraryItems(items) {
   const grid = document.getElementById('libraryGrid');
@@ -548,19 +595,6 @@ function renderLibraryItems(items) {
   `).join('');
 }
 
-function renderMiniLibrary() {
-  const lib  = loadLibrary();
-  const mini = document.getElementById('miniLibrary');
-  if (!lib.length) {
-    mini.innerHTML = '<div class="mini-lib-empty">No saved images yet.</div>';
-    return;
-  }
-  mini.innerHTML = lib.map(url => `
-    <div class="mini-lib-item" onclick="pickFromMiniLibrary('${url}')">
-      <img src="${url}" alt="" onerror="this.parentElement.style.display='none'"/>
-    </div>
-  `).join('');
-}
 
 function pickFromMiniLibrary(url) {
   pendingImgUrl = url;
@@ -575,12 +609,6 @@ function useFromLibrary(url) {
   pendingImgUrl = url;
 }
 
-function clearLibrary() {
-  if (!confirm('Clear entire image library? Product images are NOT deleted.')) return;
-  localStorage.removeItem('megaads_library');
-  renderLibrary();
-  showToast('\uD83D\uDDD1\uFE0F Library cleared');
-}
 
 // =====================
 // REFRESH FROM SERVER
@@ -604,6 +632,21 @@ function handleAuthExpired() {
 async function logoutAdmin() {
   try { await fetch('/api/admin/logout', { method: 'POST' }); } catch (e) {}
   window.location.href = 'login.html';
+}
+
+async function toggleGalleryLibraryPicker() {
+  const picker = document.getElementById('galleryLibraryPicker');
+  if (!picker) return;
+  if (picker.style.display !== 'none') { picker.style.display = 'none'; return; }
+  const lib = await loadLibrary();
+  picker.innerHTML = lib.length
+    ? lib.map(url => `
+        <div class="mini-lib-item" onclick="addGalleryImage('${url}')">
+          <img src="${url}" alt="" onerror="this.parentElement.style.display='none'"/>
+        </div>
+      `).join('')
+    : '<div class="mini-lib-empty">No saved images yet.</div>';
+  picker.style.display = 'grid';
 }
 
 // =====================

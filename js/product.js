@@ -5,6 +5,7 @@
 let currentProduct = null;
 let currentQty = 1;
 let wishlisted = false;
+let activeVariantPrice = null;
 
 // Combine all products for lookup. Each item already carries its real
 // server-assigned id (e.g. 'd-3', 'fl-2') from data.js — no more
@@ -25,8 +26,14 @@ function getProductFromUrl() {
 }
 
 function getProductGallery(p) {
-  const gallery = (p.images && p.images.length) ? p.images.slice() : [];
-  if (p.img && !gallery.includes(p.img)) gallery.unshift(p.img);
+  const raw = (p.images && p.images.length) ? p.images.slice() : [];
+  // normalize: old plain-string entries become { img, label:'', usd:null }
+  const gallery = raw.map(entry =>
+    typeof entry === 'string' ? { img: entry, label: '', usd: null } : entry
+  );
+  if (p.img && !gallery.some(g => g.img === p.img)) {
+    gallery.unshift({ img: p.img, label: '', usd: null });
+  }
   return gallery;
 }
 
@@ -49,13 +56,14 @@ function renderProduct() {
 
   const gallery = getProductGallery(p);
 const mainImg = document.getElementById('mainImg');
-mainImg.src = gallery.length ? gallery[0] : emojiToDataUri(p.icon);
+mainImg.src = gallery.length ? gallery[0].img : emojiToDataUri(p.icon);
 
 const thumbsWrap = document.getElementById('galleryThumbs');
 thumbsWrap.innerHTML = gallery.length
-  ? gallery.map((src, idx) => `
-      <div class="gallery-thumb ${idx === 0 ? 'active' : ''}" onclick="selectThumb(this, '${src}')">
-        <img src="${src}" alt=""/>
+  ? gallery.map((g, idx) => `
+      <div class="gallery-thumb ${idx === 0 ? 'active' : ''}" onclick="selectThumb(this, ${idx})">
+        <img src="${g.img}" alt=""/>
+        ${g.label ? `<span class="thumb-variant-label">${g.label}</span>` : ''}
       </div>
     `).join('')
   : [0,1,2,3].map((n, idx) => `
@@ -102,10 +110,25 @@ function emojiToDataUri(emoji) {
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
-function selectThumb(el, src) {
+function selectThumb(el, galleryIndex) {
   document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  if (src) document.getElementById('mainImg').src = src;
+  if (galleryIndex === undefined) return;
+
+  const gallery = getProductGallery(currentProduct);
+  const g = gallery[galleryIndex];
+  document.getElementById('mainImg').src = g.img;
+
+  // Update title + price only if this variant actually has its own values
+  const titleEl = document.getElementById('productTitle');
+  titleEl.textContent = g.label ? `${currentProduct.name} — ${g.label}` : currentProduct.name;
+
+  if (g.usd !== null && g.usd !== undefined && g.usd !== '') {
+    activeVariantPrice = g.usd;
+  } else {
+    activeVariantPrice = null;
+  }
+  refreshProductPrice();
 }
 
 // =====================
@@ -113,7 +136,8 @@ function selectThumb(el, src) {
 // =====================
 function refreshProductPrice() {
   const p = currentProduct;
-  const total = p.usd * currentQty;
+  const unitPrice = (activeVariantPrice !== null) ? activeVariantPrice : p.usd;
+  const total = unitPrice * currentQty;
   const display = document.getElementById('priceDisplay');
   const original = document.getElementById('priceOriginal');
   const saving = document.getElementById('priceSaving');

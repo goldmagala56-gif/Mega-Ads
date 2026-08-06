@@ -197,24 +197,24 @@
       <div class="modal-fields" id="modalFields"></div>
 
       <!-- ALTERNATE IMAGES / GALLERY — flash & deals products only -->
-<div class="modal-gallery-section" id="modalGallerySection" style="display:none">
-  <label>Alternate Images <span style="font-weight:400;color:#999">(different colors, extra angles, etc.)</span></label>
-  <div class="modal-gallery-grid" id="modalGalleryGrid"></div>
-  <div class="modal-gallery-add">
-    <input
-      type="text"
-      id="galleryUrlInput"
-      placeholder="Paste image URL and press Enter"
-      onkeydown="if(event.key==='Enter'){event.preventDefault(); addGalleryImage(this.value.trim());}"
-    />
-    <label class="btn-choose-small">
-      Upload
-      <input type="file" accept="image/*" onchange="handleGalleryFileUpload(this)" style="display:none"/>
-    </label>
-  </div>
-</div>
-
-    </div>
+      <div class="modal-gallery-section" id="modalGallerySection" style="display:none">
+        <label>Alternate Images <span style="font-weight:400;color:#999">(different colors, extra angles, etc.)</span></label>
+        <div class="modal-gallery-grid" id="modalGalleryGrid"></div>
+        <div class="modal-gallery-add">
+          <input
+            type="text"
+            id="galleryUrlInput"
+            placeholder="Paste image URL and press Enter"
+            onkeydown="if(event.key==='Enter'){event.preventDefault(); addGalleryImage(this.value.trim());}"
+          />
+          <label class="btn-choose-small">
+            Upload
+            <input type="file" accept="image/*" onchange="handleGalleryFileUpload(this)" style="display:none"/>
+          </label>
+          <button type="button" class="btn-choose-small" onclick="toggleGalleryLibraryPicker()">&#128247; Library</button>
+        </div>
+        <div class="mini-library" id="galleryLibraryPicker" style="display:none; margin-top:10px;"></div>
+      </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-apply" onclick="applyImage()">&#10003; Apply Image</button>

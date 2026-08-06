@@ -235,9 +235,10 @@ nav a:hover, nav a.active {
   z-index: 2;
   max-width: 46%;
 }
-.hero-slide-content h2 { font-size: 19px; color: white; }
+.hero-slide-content h2 { font-size: 19px; color: white;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 .hero-slide-content p {
-  font-size: 19px; color: rgba(255,255,255,0.92); font-family: inherit;
+  font-size: 19px; color: rgba(255,255,255,0.92); font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin-top: 12px; font-weight: 600;
 }
 .hero-cta {
