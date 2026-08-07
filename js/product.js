@@ -226,8 +226,12 @@ function changeQty(delta) {
 // =====================
 function addToCartPage() {
   const p = currentProduct;
+  const unitPrice = (activeVariantPrice !== null) ? activeVariantPrice : p.usd;
+  const activeLabel = document.querySelector('.gallery-thumb.active .thumb-variant-label');
+  const itemName = activeLabel ? `${p.name} — ${activeLabel.textContent}` : p.name;
+
   for (let i = 0; i < currentQty; i++) {
-    cart.push({ name: p.name, usdPrice: p.usd, icon: p.icon });
+    cart.push({ name: itemName, usdPrice: unitPrice, icon: p.icon });
   }
   persistCart();
   syncCartBadges();

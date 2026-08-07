@@ -28,6 +28,7 @@ function showSection(name) {
   if (name === 'deals')   renderDealCards();
   if (name === 'library') renderLibrary();
   if (name === 'catalog') renderCatalogCards();
+  if (name === 'bulk') renderBulkHistory();
 
   return false;
 }
@@ -228,6 +229,20 @@ async function deleteItem(section, id) {
   }
 }
 
+async function renderBulkHistory() {
+  const wrap = document.getElementById('bulkPreviews');
+  if (!wrap) return;
+  const lib = await loadLibrary();
+  wrap.innerHTML = lib.length
+    ? lib.map(url => `
+        <div class="bulk-thumb">
+          <img src="${url}" alt=""/>
+          <button class="bulk-thumb-assign" onclick="assignBulkImage('${url}')">Assign to product</button>
+        </div>
+      `).join('')
+    : '<div class="lib-empty">No images uploaded yet.</div>';
+}
+
 // =====================
 // MODAL
 // =====================
@@ -319,7 +334,10 @@ async function applyImage() {
     updates.img = url;
     saveToLibrary(url);
   }
-
+  if (url) {
+  updates.img = url;
+  await saveToLibrary(url);
+  }
 
   const fName     = document.getElementById('f-name');
   const fUsd      = document.getElementById('f-usd');
@@ -421,12 +439,14 @@ async function uploadAndPreview(file) {
 
     pendingImgUrl = data.url;
     previewFromUrl(data.url);
+    await saveToLibrary(data.url);
     showToast('\uD83D\uDDBC\uFE0F Image uploaded \u2014 click Apply to save');
     return data.url;
   } catch (e) {
     showToast('\u274C Upload failed \u2014 check your connection');
     return null;
   }
+  
 }
 
 async function renderLibrary() {
@@ -533,31 +553,18 @@ async function handleGalleryFileUpload(input) {
 // BULK UPLOAD
 // =====================
 async function handleBulkUpload(files) {
-  const wrap = document.getElementById('bulkPreviews');
-
   for (const file of Array.from(files)) {
     const formData = new FormData();
     formData.append('image', file);
-
     try {
       const res = await fetch('/api/upload', { method: 'POST', body: formData });
       if (res.status === 401) return handleAuthExpired();
       const data = await res.json();
       if (!data.success) continue;
-
-      saveToLibrary(data.url);
-      const div = document.createElement('div');
-      div.className = 'bulk-thumb';
-      div.innerHTML = `
-        <img src="${data.url}" alt=""/>
-        <div class="bulk-thumb-name">${file.name}</div>
-        <button class="bulk-thumb-assign" onclick="assignBulkImage('${data.url}')">Assign to product</button>
-      `;
-      wrap.appendChild(div);
-    } catch (e) {
-      // continue with remaining files even if one fails
-    }
+      await saveToLibrary(data.url);
+    } catch (e) { /* continue with remaining files */ }
   }
+  await renderBulkHistory();
   showToast('\uD83D\uDCE4 Images uploaded to library');
 }
 
