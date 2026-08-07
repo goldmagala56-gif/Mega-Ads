@@ -90,8 +90,11 @@
             </svg>
           </span>
         </a>
+        <button class="menu-btn" onclick="openSiteMenu()">&#9776;</button>
       </div>
     </div>
+
+    
   </header>
 
   <!-- NAV -->
@@ -456,6 +459,42 @@
 </button>
     </div>
   </div>  
+  
+  <!-- SITE MENU DRAWER (mobile) -->
+  <div id="site-menu-overlay" onclick="closeSiteMenu()"></div>
+  <div id="site-menu">
+    <div class="cat-drawer-header">
+      Menu
+      <button class="cat-drawer-close" onclick="closeSiteMenu()">&#10005;</button>
+    </div>
+    <div class="site-menu-col">
+      <h4>Mega Ads</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="site-menu-col">
+      <h4>Customer Service</h4>
+      <a href="services.html">Help Center</a>
+      <a href="track.html">Track My Order</a>
+      <a href="services.html#faq-returns">Returns &amp; Refunds</a>
+      <a href="services.html#contact">Contact Us</a>
+    </div>
+    <div class="site-menu-col">
+      <h4>Sell With Us</h4>
+      <a href="seller/index.html">Become a Seller</a>
+      <a href="partnership.html#apply">Business Ads</a>
+      <a href="partnership.html#apply">Affiliate Program</a>
+    </div>
+    <div class="site-menu-col">
+      <h4>Follow Us</h4>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter / X</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
