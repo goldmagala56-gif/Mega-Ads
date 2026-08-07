@@ -78,9 +78,20 @@ function openDrawer() {
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
 function closeDrawer() {
   document.getElementById('cat-drawer').classList.remove('open');
   document.getElementById('cat-drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function openSiteMenu() {
+  document.getElementById('site-menu').classList.add('open');
+  document.getElementById('site-menu-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSiteMenu() {
+  document.getElementById('site-menu').classList.remove('open');
+  document.getElementById('site-menu-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
 

@@ -71,6 +71,28 @@ header {
   background-clip: text;
 }
 .logo-sub { font-size: 13px; color: var(--secondary); display: block; margin-top: -2px; font-weight: 700; }
+.menu-btn {
+  display: none;
+  background: var(--white); border: 2px solid var(--secondary);
+  color: var(--secondary); width: 38px; height: 38px;
+  border-radius: 50%; font-size: 18px; align-items: center; justify-content: center;
+}
+#site-menu-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45); z-index: 600;
+}
+#site-menu-overlay.open { display: block; }
+#site-menu {
+  position: fixed; top: 0; right: -280px; bottom: 0;
+  width: 280px; background: var(--white);
+  z-index: 700; overflow-y: auto;
+  transition: right .3s ease; box-shadow: var(--shadow-lg);
+}
+#site-menu.open { right: 0; }
+
+.site-menu-col { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
+.site-menu-col h4 { font-size: 13px; color: var(--secondary); margin-bottom: 10px; }
+.site-menu-col a { display: block; font-size: 13px; color: #444; padding: 6px 0; }
 
 /* SEARCH */
 .search-bar {
@@ -402,8 +424,10 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+/* base rule — replace entirely */
 .fp-img {
-  height: 130px;                     /* was 100px — more breathing room for uploads */
+  aspect-ratio: 1 / 1;
+  width: 100%;
   background: #f5f6fa; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
   font-size: 50px; margin-bottom: 7px; overflow: hidden;
@@ -641,6 +665,7 @@ footer {
   .flash-sale { width: 100%; }
   .cat-sidebar { display: none; }    /* reachable via bottom-nav "Categories" drawer */
   .right-sidebar { display: none; }  /* replaced by the mobile-welcome strip below */
+  .menu-btn { display: flex; }
 
   /* bottom nav takes over navigation from here down — the actual
      display:block override lives right after #mobile-nav's base
@@ -684,12 +709,7 @@ footer {
   .deals-grid { grid-template-columns: repeat(3, 1fr); }
 
   /* footer */
-  .footer-inner { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .hero-slide-bg, .cat-tile-media {
-    border-radius: 0;   /* full rectangle — "display the whole div" on phone */
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
-    mask-image: linear-gradient(to right, transparent 0%, black 30%);
-  }
+  footer { display: none; }
 }
 
 /* ── 600px: large phone — full single column ── */
@@ -742,7 +762,13 @@ footer {
   .hero-prev, .hero-next { width: 28px; height: 28px; font-size: 18px; }
   .logo { min-width: 0; flex-shrink: 1; gap: 8px; }
   .logo-icon-img { width: 34px; height: 34px; }
-  .logo > div { display: flex; align-items: baseline; gap: 6px; overflow: hidden; }
+  .logo > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  overflow: hidden;
+}
   .logo-text { font-size: 15px; white-space: nowrap; }
   .logo-sub {
     font-size: 9px; margin-top: 0; white-space: nowrap;
@@ -774,7 +800,7 @@ footer {
   .flash-viewall { margin-top: 0; }
   .flash-products-wrap { border-left: none; border-top: 1px solid var(--border); }
   .flash-product { min-width: 120px; }
-  .fp-img { height: 100px; font-size: 42px; }
+  
 
   /* deals grid — 2 columns on phone */
   .deals-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -799,7 +825,6 @@ footer {
 /* ── 400px: small phone ── */
 @media screen and (max-width: 400px) {
   .logo-text { font-size: 16px; }
-  .logo-sub  { display: none; }
   .hero-slide-content {
   position: relative;
   z-index: 2;
@@ -812,9 +837,8 @@ footer {
   .deal-name { font-size: 10px; }
   .tile-icon { font-size: 22px; }
   .flash-product { min-width: 80px; padding: 6px 8px; }
-  .footer-inner { grid-template-columns: 1fr; }
   .countdown span { font-size: 13px; min-width: 24px; }
-  .fp-img { height: 90px; width: 100%; font-size: 30px; }
+ 
 }
 
 /* =====================
