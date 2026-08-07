@@ -75,7 +75,8 @@ header {
   display: none;
   background: var(--white); border: 2px solid var(--secondary);
   color: var(--secondary); width: 38px; height: 38px;
-  border-radius: 50%; font-size: 18px; align-items: center; justify-content: center;
+  border-radius: 10px;   /* was 50% — now a rounded box, not a circle */
+  font-size: 18px; align-items: center; justify-content: center;
 }
 #site-menu-overlay {
   display: none; position: fixed; inset: 0;
@@ -282,14 +283,14 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 .hero-slide-bg {
   position: absolute;
   top: 0; right: 0; bottom: 0;
-  width: 60%;
+  width: 68%;
   z-index: 1;
   background-size: cover;
   background-position: center;
   overflow: hidden;                                    /* NEW */
   border-radius: 50% 0 0 50% / 70% 0 0 70%;             /* NEW — curves the left edge */
-   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
-  mask-image: linear-gradient(to right, transparent 0%, black 25%);
+   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 42%);
+  mask-image: linear-gradient(to right, transparent 0%, black 42%);
 }
 .hero-slide-bg::before {
   content: '';
@@ -334,11 +335,11 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 }
 .cat-tile-media {
   position: absolute; top: 0; right: 0; bottom: 0;
-  width: 55%;
+  width: 62%;
   overflow: hidden;                                     /* NEW */
   border-radius: 50% 0 0 50% / 70% 0 0 70%;              /* NEW — curved seam */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
-  mask-image: linear-gradient(to right, transparent 0%, black 25%);
+ -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
+  mask-image: linear-gradient(to right, transparent 0%, black 40%);
 }
 .cat-tile-media::after {
   content: '';
@@ -426,11 +427,13 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 }
 /* base rule — replace entirely */
 .fp-img {
-  aspect-ratio: 1 / 1;
-  width: 100%;
+  width: 100px;
+  height: 100px;
   background: #f5f6fa; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
-  font-size: 50px; margin-bottom: 7px; overflow: hidden;
+  font-size: 40px; margin: 0 auto 7px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 .flash-arrow {
   position: absolute; top: 0; bottom: 0; width: 30px;
@@ -634,6 +637,10 @@ footer {
     gap: 10px;
   }
   .deals-grid { grid-template-columns: repeat(4, 1fr); }
+  .menu-btn { display: flex; }
+  .currency-btn { padding: 7px 12px; font-size: 12px; }
+  .cart-btn { padding: 8px 14px; font-size: 12px; }
+  .header-actions { gap: 6px; }
   .hero-slider { height: 300px; width: 100%; }
   .hero-slide-content {
   position: relative;
@@ -688,6 +695,11 @@ footer {
   /* hero */
   .hero-slider { height: 260px; width: 100%; }
   .hero-slide { padding: 24px 28px; }
+  .hero-slide-bg, .cat-tile-media {
+  border-radius: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 48%);
+  mask-image: linear-gradient(to right, transparent 0%, black 48%);
+}
   .hero-slide-content {
   position: relative;
   z-index: 2;
