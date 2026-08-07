@@ -217,7 +217,7 @@ async function saveOrder(order) {
 }
 
 async function getLibrary() {
-  const { rows } = await pool.query('SELECT url FROM image_library ORDER BY created_at DESC LIMIT 200');
+  const { rows } = await pool.query('SELECT url FROM image_library ORDER BY created_at DESC');
   return rows.map(r => r.url);
 }
 async function addToLibrary(url) {

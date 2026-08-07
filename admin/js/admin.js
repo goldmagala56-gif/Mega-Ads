@@ -332,11 +332,8 @@ async function applyImage() {
   const url = pendingImgUrl || document.getElementById('urlInput').value.trim();
   if (url) {
     updates.img = url;
-    saveToLibrary(url);
+    await saveToLibrary(url);
   }
-  if (url) {
-  updates.img = url;
-  await saveToLibrary(url);
   }
 
   const fName     = document.getElementById('f-name');
@@ -382,7 +379,7 @@ async function applyImage() {
   } catch (e) {
     showToast('\u274C Could not save changes \u2014 check your connection');
   }
-}
+
 
 // =====================
 // TABS IN MODAL
@@ -517,10 +514,10 @@ function updateGalleryMeta(index, field, value) {
   pendingGalleryImages[index] = updated;
 }
 
-function addGalleryImage(url) {
+async function addGalleryImage(url) {
   if (!url) return;
   pendingGalleryImages.push({ img: url, label: '', usd: null });
-  saveToLibrary(url);
+  await saveToLibrary(url);
   renderGalleryGrid();
   const input = document.getElementById('galleryUrlInput');
   if (input) input.value = '';
