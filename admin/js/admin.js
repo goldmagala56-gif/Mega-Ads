@@ -334,7 +334,6 @@ async function applyImage() {
     updates.img = url;
     await saveToLibrary(url);
   }
-  }
 
   const fName     = document.getElementById('f-name');
   const fUsd      = document.getElementById('f-usd');
@@ -348,8 +347,8 @@ async function applyImage() {
   if (fSubtitle && fSubtitle.value.trim()) updates.subtitle = fSubtitle.value.trim();
   if (fText && fText.value.trim())     updates.text     = fText.value.trim();
   if (modalTarget.section === 'flash' || modalTarget.section === 'deals' || modalTarget.section === 'catalog') {
-  updates.images = pendingGalleryImages;
- }
+    updates.images = pendingGalleryImages;
+  }
 
   try {
     let endpoint, resultKey;
@@ -379,7 +378,7 @@ async function applyImage() {
   } catch (e) {
     showToast('\u274C Could not save changes \u2014 check your connection');
   }
-
+}
 
 // =====================
 // TABS IN MODAL
