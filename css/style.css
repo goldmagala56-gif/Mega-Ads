@@ -335,11 +335,11 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 }
 .cat-tile-media {
   position: absolute; top: 0; right: 0; bottom: 0;
-  width: 62%;
+  width: 73%;
   overflow: hidden;                                     /* NEW */
   border-radius: 50% 0 0 50% / 70% 0 0 70%;              /* NEW — curved seam */
  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
-  mask-image: linear-gradient(to right, transparent 0%, black 40%);
+  mask-image: linear-gradient(to right, transparent 0%, black 42%);
 }
 .cat-tile-media::after {
   content: '';
