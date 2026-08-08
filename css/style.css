@@ -427,8 +427,8 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 }
 /* base rule — replace entirely */
 .fp-img {
-  width: 150px;
-  height: 150px;
+  width: 210px;
+  height: 180px;
   background: #f5f6fa; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
   font-size: 40px; margin: 0 auto 7px;

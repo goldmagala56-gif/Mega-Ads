@@ -340,6 +340,8 @@ module.exports = {
   getHero, updateHeroSlide,
   getTiles, updateTile,
   readOrders, saveOrder,
-  getLibrary, addToLibrary, clearLibraryTable,   // NEW
-  
+  getLibrary, addToLibrary, clearLibraryTable,
+  hashPassword, verifyPassword,
+  createSeller, findSellerByEmail, getSellerById, updateSeller,
+  getSellerProducts, createSellerProduct, updateSellerProduct, deleteSellerProduct,
 };
