@@ -52,7 +52,8 @@ table { width: 100%; border-collapse: collapse; }
 .seller-header-actions { display: flex; align-items: center; gap: 14px; }
 .header-icon-btn {
   position: relative; color: #ccc; font-size: 18px; padding: 8px;
-  border-radius: 50%; transition: background .2s;
+  border-radius: 8px;   /* was 50% — box, matching the new pattern */
+  transition: background .2s;
 }
 .header-icon-btn:hover { background: rgba(255,255,255,0.1); }
 .notif-dot {

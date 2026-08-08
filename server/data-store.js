@@ -86,6 +86,20 @@ async function initStore() {
   );
 `);
 
+await pool.query(`
+  CREATE TABLE IF NOT EXISTS sellers (
+    id TEXT PRIMARY KEY,
+    store_name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    phone TEXT, country TEXT, description TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+  );
+`);
+await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS seller_id TEXT REFERENCES sellers(id) ON DELETE CASCADE;`);
+await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS stock INTEGER DEFAULT 0;`);
+await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS category TEXT;`);
+
   const { rows: pc } = await pool.query('SELECT COUNT(*) FROM products');
   if (Number(pc[0].count) === 0) {
     for (const p of SEED_PRODUCTS) {
@@ -228,6 +242,98 @@ async function clearLibraryTable() {
   await pool.query('DELETE FROM image_library');
 }
 
+const crypto = require('crypto');
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(password, salt, 64).toString('hex');
+  return salt + ':' + hash;
+}
+function verifyPassword(password, stored) {
+  const [salt, hash] = stored.split(':');
+  const check = crypto.scryptSync(password, salt, 64).toString('hex');
+  return crypto.timingSafeEqual(Buffer.from(hash, 'hex'), Buffer.from(check, 'hex'));
+}
+
+async function createSeller({ storeName, email, password, phone, country, description }) {
+  const id = 'sel-' + Date.now();
+  const passwordHash = hashPassword(password);
+  await pool.query(
+    `INSERT INTO sellers (id, store_name, email, password_hash, phone, country, description) VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+    [id, storeName, email.toLowerCase(), passwordHash, phone || '', country || '', description || '']
+  );
+  return { id, storeName, email };
+}
+
+async function findSellerByEmail(email) {
+  const { rows } = await pool.query('SELECT * FROM sellers WHERE email=$1', [email.toLowerCase()]);
+  return rows[0] || null;
+}
+
+async function getSellerById(id) {
+  const { rows } = await pool.query('SELECT id, store_name, email, phone, country, description FROM sellers WHERE id=$1', [id]);
+  return rows[0] || null;
+}
+
+async function updateSeller(id, updates) {
+  const { rows } = await pool.query('SELECT * FROM sellers WHERE id=$1', [id]);
+  if (!rows.length) return null;
+  const cur = rows[0];
+  const storeName = updates.storeName !== undefined ? updates.storeName : cur.store_name;
+  const phone = updates.phone !== undefined ? updates.phone : cur.phone;
+  const country = updates.country !== undefined ? updates.country : cur.country;
+  const description = updates.description !== undefined ? updates.description : cur.description;
+  await pool.query(
+    'UPDATE sellers SET store_name=$1, phone=$2, country=$3, description=$4 WHERE id=$5',
+    [storeName, phone, country, description, id]
+  );
+  return { id, storeName, phone, country, description };
+}
+
+async function getSellerProducts(sellerId) {
+  const { rows } = await pool.query('SELECT * FROM products WHERE seller_id=$1 ORDER BY id DESC', [sellerId]);
+  return rows.map(r => ({
+    id: r.id, name: r.name, usd: Number(r.usd), stock: r.stock, category: r.category,
+    icon: r.icon, img: r.img || '', images: r.images || [],
+  }));
+}
+
+async function createSellerProduct(sellerId, input) {
+  const id = 'sel-p-' + Date.now();
+  const name = input.name || 'New Product';
+  const usd = Number(input.usd) || 0;
+  const stock = Number(input.stock) || 0;
+  const category = input.category || '';
+  const icon = input.icon || '\uD83D\uDCE6';
+  const img = input.img || '';
+  await pool.query(
+    `INSERT INTO products (id, section, icon, name, usd, img, images, seller_id, stock, category) VALUES ($1,'seller',$2,$3,$4,$5,'[]'::jsonb,$6,$7,$8)`,
+    [id, icon, name, usd, img, sellerId, stock, category]
+  );
+  return { id, name, usd, stock, category, icon, img, images: [] };
+}
+
+async function updateSellerProduct(sellerId, id, updates) {
+  const { rows } = await pool.query('SELECT * FROM products WHERE id=$1 AND seller_id=$2', [id, sellerId]);
+  if (!rows.length) return null; // not found OR not owned by this seller — same response either way
+  const cur = rows[0];
+  const name = updates.name !== undefined ? updates.name : cur.name;
+  const usd = updates.usd !== undefined ? Number(updates.usd) : Number(cur.usd);
+  const stock = updates.stock !== undefined ? Number(updates.stock) : cur.stock;
+  const category = updates.category !== undefined ? updates.category : cur.category;
+  const img = updates.img !== undefined ? updates.img : cur.img;
+  await pool.query(
+    'UPDATE products SET name=$1, usd=$2, stock=$3, category=$4, img=$5 WHERE id=$6 AND seller_id=$7',
+    [name, usd, stock, category, img, id, sellerId]
+  );
+  return { id, name, usd, stock, category, img };
+}
+
+async function deleteSellerProduct(sellerId, id) {
+  const res = await pool.query('DELETE FROM products WHERE id=$1 AND seller_id=$2', [id, sellerId]);
+  return res.rowCount > 0;
+}
+
 module.exports = {
   initStore,
   getAllProducts, createProduct, updateProduct, deleteProduct,
@@ -235,4 +341,5 @@ module.exports = {
   getTiles, updateTile,
   readOrders, saveOrder,
   getLibrary, addToLibrary, clearLibraryTable,   // NEW
+  
 };

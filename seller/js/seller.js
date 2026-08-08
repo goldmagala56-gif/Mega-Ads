@@ -51,7 +51,7 @@ function logoutSeller() {
 // =====================
 function renderOverview() {
   const revenue  = sellerOrders.reduce((sum, o) => sum + o.amount, 0);
-  const products = sellerProducts.filter(p => p.status !== 'out').length;
+  const products = sellerProducts.filter(p => p.stock > 0).length;
 
   document.getElementById('statRevenue').textContent  = '$' + revenue;
   document.getElementById('statOrders').textContent   = sellerOrders.length;
@@ -78,38 +78,34 @@ function renderOverview() {
 function renderProductsTable(filter, statusFilter) {
   let items = sellerProducts;
   if (filter) items = items.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-  if (statusFilter && statusFilter !== 'all') items = items.filter(p => p.status === statusFilter);
+
+  const withStatus = items.map(p => ({
+    ...p,
+    status: p.stock === 0 ? 'out' : p.stock <= 5 ? 'low' : 'active',
+  }));
+  const finalItems = statusFilter && statusFilter !== 'all'
+    ? withStatus.filter(p => p.status === statusFilter)
+    : withStatus;
 
   const table = document.getElementById('productsTable');
-  if (!items.length) {
+  if (!finalItems.length) {
     table.innerHTML = `<tbody><tr class="empty-row"><td>No products found.</td></tr></tbody>`;
     return;
   }
-
   table.innerHTML = `
-    <thead><tr>
-      <th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Sold</th><th>Status</th><th>Actions</th>
-    </tr></thead>
+    <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
     <tbody>
-      ${items.map(p => `
+      ${finalItems.map(p => `
         <tr>
-          <td>
-            <div class="table-product-cell">
-              <div class="table-thumb">${p.img ? `<img src="${p.img}" alt=""/>` : '\uD83D\uDCE6'}</div>
-              <span>${p.name}</span>
-            </div>
-          </td>
-          <td>${p.category}</td>
-          <td>$${p.price}</td>
+          <td><div class="table-product-cell"><div class="table-thumb">${p.img ? `<img src="${p.img}" alt=""/>` : '\uD83D\uDCE6'}</div><span>${p.name}</span></div></td>
+          <td>${p.category || '\u2014'}</td>
+          <td>$${p.usd}</td>
           <td>${p.stock}</td>
-          <td>${p.sold}</td>
           <td><span class="badge badge-${p.status}">${statusLabel(p.status)}</span></td>
-          <td>
-            <div class="table-actions">
-              <button class="table-action-btn" onclick="openProductModal('${p.id}')" title="Edit">\u270F\uFE0F</button>
-              <button class="table-action-btn danger" onclick="deleteProduct('${p.id}')" title="Delete">\uD83D\uDDD1\uFE0F</button>
-            </div>
-          </td>
+          <td><div class="table-actions">
+            <button class="table-action-btn" onclick="openProductModal('${p.id}')" title="Edit">\u270F\uFE0F</button>
+            <button class="table-action-btn danger" onclick="deleteProduct('${p.id}')" title="Delete">\uD83D\uDDD1\uFE0F</button>
+          </div></td>
         </tr>
       `).join('')}
     </tbody>
@@ -248,15 +244,15 @@ function openProductModal(id) {
   form.reset();
   document.getElementById('pImagePreview').style.display = 'none';
   document.getElementById('imgUploadPlaceholder').style.display = 'block';
+  document.getElementById('imgUploadPlaceholder').textContent = '\uD83D\uDCF7 Click to upload image';
 
   if (id) {
     const p = sellerProducts.find(x => x.id === id);
     document.getElementById('productModalTitle').textContent = 'Edit Product';
     document.getElementById('pName').value = p.name;
-    document.getElementById('pPrice').value = p.price;
+    document.getElementById('pPrice').value = p.usd;
     document.getElementById('pStock').value = p.stock;
-    document.getElementById('pCategory').value = p.category;
-    document.getElementById('pDesc').value = p.desc || '';
+    document.getElementById('pCategory').value = p.category || 'Clothing';
     if (p.img) {
       document.getElementById('pImagePreview').src = p.img;
       document.getElementById('pImagePreview').style.display = 'block';
@@ -265,9 +261,84 @@ function openProductModal(id) {
   } else {
     document.getElementById('productModalTitle').textContent = 'Add New Product';
   }
-
   document.getElementById('productOverlay').classList.add('open');
   document.getElementById('productModal').classList.add('open');
+}
+
+async function previewProductImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  document.getElementById('imgUploadPlaceholder').textContent = '\u2B06\uFE0F Uploading\u2026';
+  document.getElementById('imgUploadPlaceholder').style.display = 'block';
+
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch('/api/upload', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (!data.success) { showToast('\u274C Upload failed'); return; }
+    const preview = document.getElementById('pImagePreview');
+    preview.src = data.url;
+    preview.dataset.cloudUrl = data.url;
+    preview.style.display = 'block';
+    document.getElementById('imgUploadPlaceholder').style.display = 'none';
+  } catch (e) {
+    showToast('\u274C Upload failed \u2014 check your connection');
+  }
+}
+
+async function saveProduct(e) {
+  e.preventDefault();
+  const body = {
+    name: document.getElementById('pName').value.trim(),
+    usd: parseFloat(document.getElementById('pPrice').value),
+    stock: parseInt(document.getElementById('pStock').value),
+    category: document.getElementById('pCategory').value,
+    img: document.getElementById('pImagePreview').style.display !== 'none'
+      ? document.getElementById('pImagePreview').dataset.cloudUrl || document.getElementById('pImagePreview').src
+      : '',
+  };
+
+  try {
+    let res;
+    if (editingProductId) {
+      res = await fetch('/api/seller/products/' + editingProductId, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+      });
+    } else {
+      res = await fetch('/api/seller/products', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+      });
+    }
+    const data = await res.json();
+    if (!data.success) { showToast('\u274C Could not save product'); return; }
+
+    if (editingProductId) {
+      const p = sellerProducts.find(x => x.id === editingProductId);
+      Object.assign(p, data.product);
+    } else {
+      sellerProducts.push(data.product);
+    }
+    showToast('\u2705 Product saved');
+    closeProductModal();
+    renderProductsTable();
+    renderOverview();
+  } catch (e) {
+    showToast('\u274C Could not reach server');
+  }
+}
+
+async function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  try {
+    const res = await fetch('/api/seller/products/' + id, { method: 'DELETE' });
+    if (!res.ok) { showToast('\u274C Could not delete product'); return; }
+    sellerProducts = sellerProducts.filter(p => p.id !== id);
+    renderProductsTable();
+    showToast('\uD83D\uDDD1\uFE0F Product deleted');
+  } catch (e) {
+    showToast('\u274C Could not reach server');
+  }
 }
 
 function closeProductModal() {
@@ -357,5 +428,14 @@ function showToast(msg) {
 // INIT
 // =====================
 document.addEventListener('DOMContentLoaded', () => {
-  showView('overview');
+  onSellerDataReady(() => {
+    document.querySelector('.seller-profile span:not(.profile-caret)').textContent = sellerStoreName;
+    document.querySelector('.profile-avatar').textContent = sellerStoreName.slice(0, 2).toUpperCase();
+    showView('overview');
+  });
 });
+
+async function logoutSeller() {
+  try { await fetch('/api/seller/logout', { method: 'POST' }); } catch (e) {}
+  window.location.href = 'login.html';
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Login — Mega Ads</title>
+  <link rel="stylesheet" href="css/seller.css"/>
+</head>
+<body style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg);">
+
+  <div class="panel" style="width:420px; max-width:92vw;">
+    <div class="seller-logo" style="justify-content:center; margin-bottom:18px;">
+      <div class="logo-icon">MA</div>
+      <div><span class="logo-text">Mega Ads</span><span class="logo-sub">Seller Center</span></div>
+    </div>
+
+    <div style="display:flex; gap:6px; margin-bottom:18px; background:#f0f2f8; padding:4px; border-radius:24px;">
+      <button id="tabLoginBtn" class="btn-primary" style="flex:1;" onclick="switchAuthTab('login')">Login</button>
+      <button id="tabRegisterBtn" style="flex:1; padding:10px; border-radius:24px; font-weight:700; font-size:13px; color:var(--muted);" onclick="switchAuthTab('register')">Register</button>
+    </div>
+
+    <form id="loginForm" class="settings-form" onsubmit="handleSellerLogin(event)">
+      <div class="form-field full"><label>Email</label><input type="email" id="loginEmail" required/></div>
+      <div class="form-field full"><label>Password</label><input type="password" id="loginPassword" required/></div>
+      <button type="submit" class="btn-primary full-width">Login</button>
+    </form>
+
+    <form id="registerForm" class="settings-form" style="display:none;" onsubmit="handleSellerRegister(event)">
+      <div class="form-field full"><label>Store Name</label><input type="text" id="regStoreName" required/></div>
+      <div class="form-field full"><label>Email</label><input type="email" id="regEmail" required/></div>
+      <div class="form-field full"><label>Password</label><input type="password" id="regPassword" required minlength="6"/></div>
+      <div class="form-row">
+        <div class="form-field"><label>Phone</label><input type="tel" id="regPhone"/></div>
+        <div class="form-field"><label>Country</label><input type="text" id="regCountry"/></div>
+      </div>
+      <button type="submit" class="btn-primary full-width">Create Store</button>
+    </form>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    function switchAuthTab(name) {
+      document.getElementById('loginForm').style.display = name === 'login' ? 'flex' : 'none';
+      document.getElementById('registerForm').style.display = name === 'register' ? 'flex' : 'none';
+      document.getElementById('tabLoginBtn').className = name === 'login' ? 'btn-primary' : '';
+      document.getElementById('tabRegisterBtn').className = name === 'register' ? 'btn-primary' : '';
+    }
+
+    async function handleSellerLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      try {
+        const res = await fetch('/api/seller/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (data.success) { window.location.href = 'seller.html'; }
+        else { showToast('\u274C ' + (data.message || 'Login failed')); }
+      } catch (err) { showToast('\u274C Could not reach server'); }
+    }
+
+    async function handleSellerRegister(e) {
+      e.preventDefault();
+      const body = {
+        storeName: document.getElementById('regStoreName').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        password: document.getElementById('regPassword').value,
+        phone: document.getElementById('regPhone').value.trim(),
+        country: document.getElementById('regCountry').value.trim(),
+      };
+      try {
+        const res = await fetch('/api/seller/register', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (data.success) { window.location.href = 'seller.html'; }
+        else { showToast('\u274C ' + (data.message || 'Registration failed')); }
+      } catch (err) { showToast('\u274C Could not reach server'); }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.style.opacity = '1';
+      clearTimeout(t._t); t._t = setTimeout(() => t.style.opacity = '0', 3000);
+    }
+  </script>
+</body>
+</html>

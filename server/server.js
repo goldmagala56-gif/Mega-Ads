@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const axios = require('axios');
 const cloudinary = require('cloudinary').v2;
+const { verifySellerCredentials, requireSellerApi, requireSellerPage } = require('./seller-auth');
 
 const store = require('./data-store');
 const { verifyAdminCredentials, requireAdminApi, requireAdminPage } = require('./admin-auth');
@@ -69,6 +70,80 @@ app.post('/api/admin/logout', (req, res) => {
 
 app.get('/api/admin/session', (req, res) => {
   res.json({ isAdmin: !!(req.session && req.session.isAdmin) });
+});
+
+app.post('/api/seller/register', async (req, res) => {
+  try {
+    const { storeName, email, password, phone, country, description } = req.body || {};
+    if (!storeName || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Store name, email, and password are required' });
+    }
+    const existing = await store.findSellerByEmail(email);
+    if (existing) return res.status(409).json({ success: false, message: 'An account with that email already exists' });
+
+    const seller = await store.createSeller({ storeName, email, password, phone, country, description });
+    req.session.sellerId = seller.id;
+    req.session.sellerStoreName = seller.storeName;
+    res.json({ success: true, seller });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.post('/api/seller/login', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    const seller = await verifySellerCredentials(email, password);
+    if (!seller) return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    req.session.sellerId = seller.id;
+    req.session.sellerStoreName = seller.store_name;
+    res.json({ success: true, seller: { id: seller.id, storeName: seller.store_name, email: seller.email } });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.post('/api/seller/logout', (req, res) => {
+  req.session.sellerId = null;
+  req.session.sellerStoreName = null;
+  res.json({ success: true });
+});
+
+app.get('/api/seller/session', (req, res) => {
+  res.json({
+    isSeller: !!(req.session && req.session.sellerId),
+    sellerId: req.session ? req.session.sellerId : null,
+    storeName: req.session ? req.session.sellerStoreName : null,
+  });
+});
+
+app.get('/api/seller/products', requireSellerApi, async (req, res) => {
+  try { res.json(await store.getSellerProducts(req.session.sellerId)); }
+  catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.post('/api/seller/products', requireSellerApi, async (req, res) => {
+  try { res.json({ success: true, product: await store.createSellerProduct(req.session.sellerId, req.body || {}) }); }
+  catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.put('/api/seller/products/:id', requireSellerApi, async (req, res) => {
+  try {
+    const updated = await store.updateSellerProduct(req.session.sellerId, req.params.id, req.body || {});
+    if (!updated) return res.status(404).json({ success: false, message: 'Product not found' });
+    res.json({ success: true, product: updated });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.delete('/api/seller/products/:id', requireSellerApi, async (req, res) => {
+  try {
+    const ok = await store.deleteSellerProduct(req.session.sellerId, req.params.id);
+    if (!ok) return res.status(404).json({ success: false, message: 'Product not found' });
+    res.json({ success: true });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.put('/api/seller/settings', requireSellerApi, async (req, res) => {
+  try {
+    const updated = await store.updateSeller(req.session.sellerId, req.body || {});
+    res.json({ success: true, seller: updated });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
 });
 
 // =====================
@@ -215,12 +290,24 @@ app.delete('/api/library', requireAdminApi, async (req, res) => {
   catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
 });
 
+function requireAdminOrSellerApi(req, res, next) {
+  if (req.session && (req.session.isAdmin || req.session.sellerId)) return next();
+  return res.status(401).json({ success: false, message: 'Not logged in' });
+}
+
+app.post('/api/upload', requireAdminOrSellerApi, upload.single('image'), (req, res) => {
+  // ...unchanged body...
+});
+
 // =====================
 // ADMIN PAGE PROTECTION
 // =====================
 app.get('/admin', requireAdminPage, (req, res) => res.redirect('/admin/index.html'));
 app.get('/admin/', requireAdminPage, (req, res) => res.redirect('/admin/index.html'));
 app.get('/admin/index.html', requireAdminPage, (req, res, next) => next());
+app.get('/seller', requireSellerPage, (req, res) => res.redirect('/seller/seller.html'));
+app.get('/seller/', requireSellerPage, (req, res) => res.redirect('/seller/seller.html'));
+app.get('/seller/seller.html', requireSellerPage, (req, res, next) => next());
 
 app.use(express.static(path.join(__dirname, '..')));
 

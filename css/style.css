@@ -283,14 +283,14 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 .hero-slide-bg {
   position: absolute;
   top: 0; right: 0; bottom: 0;
-  width: 68%;
+  width: 75%;
   z-index: 1;
   background-size: cover;
   background-position: center;
   overflow: hidden;                                    /* NEW */
   border-radius: 50% 0 0 50% / 70% 0 0 70%;             /* NEW — curves the left edge */
    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 42%);
-  mask-image: linear-gradient(to right, transparent 0%, black 42%);
+  mask-image: linear-gradient(to right, transparent 0%, black 40%);
 }
 .hero-slide-bg::before {
   content: '';
@@ -427,8 +427,8 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; }
 }
 /* base rule — replace entirely */
 .fp-img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background: #f5f6fa; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
   font-size: 40px; margin: 0 auto 7px;
@@ -783,7 +783,7 @@ footer {
 }
   .logo-text { font-size: 15px; white-space: nowrap; }
   .logo-sub {
-    font-size: 9px; margin-top: 0; white-space: nowrap;
+    font-size: 12px; margin-top: 0; white-space: nowrap;
     overflow: hidden; text-overflow: ellipsis;
   }
 
