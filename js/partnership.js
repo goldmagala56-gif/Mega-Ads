@@ -6,7 +6,7 @@
 // a real /api/partnership-application endpoint later if you want it
 // to land in a database/inbox without that extra step.
 // =====================
-function handleApplySubmit(e) {
+async function handleApplySubmit(e) {
   e.preventDefault();
 
   const business = document.getElementById('pBusiness').value.trim();
@@ -16,16 +16,20 @@ function handleApplySubmit(e) {
   const type     = document.getElementById('pType').value;
   const message  = document.getElementById('pMessage').value.trim();
 
-  const body =
-    `Business: ${business}\n` +
-    `Contact Person: ${contact}\n` +
-    `Email: ${email}\n` +
-    `Phone: ${phone}\n` +
-    `Partnership Type: ${type}\n\n` +
-    `${message}`;
-
-  const mailto = `mailto:goldmagala56@gmail.com?subject=${encodeURIComponent('[Partnership] ' + type + ' — ' + business)}&body=${encodeURIComponent(body)}`;
-
-  window.location.href = mailto;
-  showToast('\u2709\uFE0F Opening your email app to send this application...');
+  try {
+    const res = await fetch('/api/partnership-application', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ business, contact, email, phone, type, message }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('\u2705 Application submitted! We\u2019ll be in touch within 2 business days.');
+      document.getElementById('applyForm').reset();
+    } else {
+      showToast('\u274C ' + (data.message || 'Could not submit application'));
+    }
+  } catch (err) {
+    showToast('\u274C Could not reach server \u2014 please try again');
+  }
 }
