@@ -41,10 +41,6 @@ document.addEventListener('click', e => {
   }
 });
 
-function logoutSeller() {
-  showToast('\uD83D\uDC4B Logged out');
-  setTimeout(() => { window.location.href = '../index.html'; }, 800);
-}
 
 // =====================
 // OVERVIEW
@@ -347,48 +343,6 @@ function closeProductModal() {
   editingProductId = null;
 }
 
-function previewProductImage(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    document.getElementById('pImagePreview').src = e.target.result;
-    document.getElementById('pImagePreview').style.display = 'block';
-    document.getElementById('imgUploadPlaceholder').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-}
-
-function saveProduct(e) {
-  e.preventDefault();
-
-  const name     = document.getElementById('pName').value.trim();
-  const price    = parseFloat(document.getElementById('pPrice').value);
-  const stock    = parseInt(document.getElementById('pStock').value);
-  const category = document.getElementById('pCategory').value;
-  const desc     = document.getElementById('pDesc').value.trim();
-  const imgSrc   = document.getElementById('pImagePreview').src;
-  const img      = document.getElementById('pImagePreview').style.display !== 'none' ? imgSrc : '';
-
-  const status = stock === 0 ? 'out' : stock <= 5 ? 'low' : 'active';
-
-  if (editingProductId) {
-    const p = sellerProducts.find(x => x.id === editingProductId);
-    Object.assign(p, { name, price, stock, category, desc, img, status });
-    showToast('\u2705 Product updated');
-  } else {
-    sellerProducts.push({
-      id: 'sp-' + Date.now(), name, price, stock, category, desc, img, status, sold: 0
-    });
-    showToast('\u2705 Product added');
-  }
-
-  saveSellerData('products', sellerProducts);
-  closeProductModal();
-  renderProductsTable();
-  renderOverview();
-}
-
 function deleteProduct(id) {
   if (!confirm('Delete this product?')) return;
   sellerProducts = sellerProducts.filter(p => p.id !== id);
@@ -400,17 +354,24 @@ function deleteProduct(id) {
 // =====================
 // SETTINGS
 // =====================
-function saveSellerSettings(e) {
+async function saveSellerSettings(e) {
   e.preventDefault();
-  const settings = {
-    name:    document.getElementById('storeName').value,
-    email:   document.getElementById('storeEmail').value,
-    phone:   document.getElementById('storePhone').value,
+  const body = {
+    storeName: document.getElementById('storeName').value.trim(),
+    phone: document.getElementById('storePhone').value.trim(),
     country: document.getElementById('storeCountry').value,
-    desc:    document.getElementById('storeDesc').value,
+    description: document.getElementById('storeDesc').value.trim(),
   };
-  saveSellerData('settings', settings);
-  showToast('\u2705 Store settings saved');
+  try {
+    const res = await fetch('/api/seller/settings', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (data.success) showToast('\u2705 Store settings saved');
+    else showToast('\u274C Could not save settings');
+  } catch (e) {
+    showToast('\u274C Could not reach server');
+  }
 }
 
 // =====================

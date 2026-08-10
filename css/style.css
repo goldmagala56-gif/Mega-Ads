@@ -70,7 +70,7 @@ header {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.logo-sub { font-size: 13px; color: var(--secondary); display: block; margin-top: -2px; font-weight: 700; }
+.logo-sub { font-size: 12px; color: var(--secondary); display: block; margin-top: -2px; font-weight: 700; }
 .menu-btn {
   display: none;
   background: var(--white); border: 2px solid var(--secondary);
@@ -783,7 +783,7 @@ footer {
 }
   .logo-text { font-size: 15px; white-space: nowrap; }
   .logo-sub {
-    font-size: 12px; margin-top: 0; white-space: nowrap;
+    font-size: 10px; margin-top: 0; white-space: nowrap;
     overflow: hidden; text-overflow: ellipsis;
   }
 
