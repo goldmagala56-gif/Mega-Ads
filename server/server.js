@@ -288,6 +288,38 @@ app.delete('/api/library', requireAdminApi, async (req, res) => {
   catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
 });
 
+app.post('/api/partnership-application', async (req, res) => {
+  try {
+    const { business, contact, email, phone, type, message } = req.body || {};
+    if (!business || !contact || !email || !type || !message) {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
+    const result = await store.savePartnershipApplication({ business, contact, email, phone, type, message });
+    res.json({ success: true, id: result.id });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.get('/api/partnership-applications', requireAdminApi, async (req, res) => {
+  try { res.json(await store.readPartnershipApplications()); }
+  catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.post('/api/contact-message', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body || {};
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
+    const result = await store.saveContactMessage({ name, email, subject, message });
+    res.json({ success: true, id: result.id });
+  } catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
+app.get('/api/contact-messages', requireAdminApi, async (req, res) => {
+  try { res.json(await store.readContactMessages()); }
+  catch (e) { console.error(e); res.status(500).json({ success: false, message: 'Database error' }); }
+});
+
 function requireAdminOrSellerApi(req, res, next) {
   if (req.session && (req.session.isAdmin || req.session.sellerId)) return next();
   return res.status(401).json({ success: false, message: 'Not logged in' });

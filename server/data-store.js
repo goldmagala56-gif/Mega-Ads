@@ -96,6 +96,21 @@ await pool.query(`
     created_at TIMESTAMPTZ DEFAULT now()
   );
 `);
+await pool.query(`
+  CREATE TABLE IF NOT EXISTS partnership_applications (
+    id TEXT PRIMARY KEY,
+    business TEXT, contact_person TEXT, email TEXT, phone TEXT,
+    partnership_type TEXT, message TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+  );
+`);
+await pool.query(`
+  CREATE TABLE IF NOT EXISTS contact_messages (
+    id TEXT PRIMARY KEY,
+    name TEXT, email TEXT, subject TEXT, message TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+  );
+`);
 await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS seller_id TEXT REFERENCES sellers(id) ON DELETE CASCADE;`);
 await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS stock INTEGER DEFAULT 0;`);
 await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS category TEXT;`);
@@ -334,6 +349,33 @@ async function deleteSellerProduct(sellerId, id) {
   return res.rowCount > 0;
 }
 
+async function savePartnershipApplication(app) {
+  const id = 'PA-' + Date.now();
+  await pool.query(
+    `INSERT INTO partnership_applications (id, business, contact_person, email, phone, partnership_type, message) VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+    [id, app.business, app.contact, app.email, app.phone, app.type, app.message]
+  );
+  return { id };
+}
+
+async function readPartnershipApplications() {
+  const { rows } = await pool.query('SELECT * FROM partnership_applications ORDER BY created_at DESC');
+  return rows;
+}
+async function saveContactMessage(msg) {
+  const id = 'CM-' + Date.now();
+  await pool.query(
+    `INSERT INTO contact_messages (id, name, email, subject, message) VALUES ($1,$2,$3,$4,$5)`,
+    [id, msg.name, msg.email, msg.subject, msg.message]
+  );
+  return { id };
+}
+
+async function readContactMessages() {
+  const { rows } = await pool.query('SELECT * FROM contact_messages ORDER BY created_at DESC');
+  return rows;
+}
+
 module.exports = {
   initStore,
   getAllProducts, createProduct, updateProduct, deleteProduct,
@@ -344,4 +386,6 @@ module.exports = {
   hashPassword, verifyPassword,
   createSeller, findSellerByEmail, getSellerById, updateSeller,
   getSellerProducts, createSellerProduct, updateSellerProduct, deleteSellerProduct,
+  savePartnershipApplication, readPartnershipApplications,
+  saveContactMessage, readContactMessages,
 };

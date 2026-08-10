@@ -101,15 +101,28 @@ function quickSearch(term) {
 // =====================
 // CONTACT FORM
 // =====================
-function handleContactSubmit(event) {
+async function handleContactSubmit(event) {
   event.preventDefault();
-  showToast('\u2705 Message sent! We\u2019ll get back to you within 24 hours.');
-  document.getElementById('contactForm').reset();
-}
 
-// =====================
-// INIT
-// =====================
-document.addEventListener('DOMContentLoaded', () => {
-  renderFaq(faqData);
-});
+  const name    = document.getElementById('cName').value.trim();
+  const email   = document.getElementById('cEmail').value.trim();
+  const subject = document.getElementById('cSubject').value;
+  const message = document.getElementById('cMessage').value.trim();
+
+  try {
+    const res = await fetch('/api/contact-message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, subject, message }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('\u2705 Message sent! We\u2019ll get back to you within 24 hours.');
+      document.getElementById('contactForm').reset();
+    } else {
+      showToast('\u274C ' + (data.message || 'Could not send message'));
+    }
+  } catch (err) {
+    showToast('\u274C Could not reach server \u2014 please try again');
+  }
+}
