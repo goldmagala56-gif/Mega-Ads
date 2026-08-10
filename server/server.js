@@ -20,6 +20,16 @@ if (!FLW_SECRET_KEY || !FLW_PUBLIC_KEY) {
   console.warn('\n\u26A0\uFE0F  FLW_SECRET_KEY / FLW_PUBLIC_KEY are not set. Payments will not work until this is done.\n');
 }
 
+const crypto = require('crypto');
+
+function generateOrderId() {
+  // MA- + 8 random hex characters (uppercase) — e.g. MA-7F3A9C2B
+  // crypto.randomBytes is cryptographically random, not time-based,
+  // so two orders placed in the same millisecond can never collide.
+  const random = crypto.randomBytes(4).toString('hex').toUpperCase();
+  return 'MA-' + random;
+}
+
 // cloudinary.config({
 //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 //   api_key: process.env.CLOUDINARY_API_KEY,
@@ -38,18 +48,6 @@ app.use(session({
 // =====================
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 8 * 1024 * 1024 } });
 
-app.post('/api/upload', requireAdminApi, upload.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ success: false, message: 'No file received' });
-
-  const uploadStream = cloudinary.uploader.upload_stream({ folder: 'mega-ads' }, (error, result) => {
-    if (error) {
-      console.error('Cloudinary upload error:', error);
-      return res.status(500).json({ success: false, message: 'Upload failed' });
-    }
-    res.json({ success: true, url: result.secure_url });
-  });
-  uploadStream.end(req.file.buffer);
-});
 
 // =====================
 // ADMIN AUTH
@@ -236,7 +234,7 @@ app.post('/api/verify-payment', async (req, res) => {
 
     if (data.status === 'successful' && amountOk && currencyOk) {
       const record = {
-        id: 'MA-' + Date.now().toString().slice(-8),
+        id: generateOrderId(),
         method: 'flutterwave',
         transaction_id, flw_status: data.status, amount: data.amount, currency: data.currency,
         order: order || {},
@@ -259,7 +257,7 @@ app.post('/api/record-cod-order', async (req, res) => {
   try {
     const { order, amount, currency } = req.body;
     const record = {
-      id: 'MA-' + Date.now().toString().slice(-8),
+      id: generateOrderId(),
       method: 'cash_on_delivery',
       amount, currency, order: order || {},
     };
@@ -296,6 +294,19 @@ function requireAdminOrSellerApi(req, res, next) {
 }
 
 app.post('/api/upload', requireAdminOrSellerApi, upload.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, message: 'No file received' });
+
+  const uploadStream = cloudinary.uploader.upload_stream({ folder: 'mega-ads' }, (error, result) => {
+    if (error) {
+      console.error('Cloudinary upload error:', error);
+      return res.status(500).json({ success: false, message: 'Upload failed' });
+    }
+    res.json({ success: true, url: result.secure_url });
+  });
+  uploadStream.end(req.file.buffer);
+});
+
+app.post('/api/upload', requireAdminOrSellerApi, upload.single('image'), (req, res) => {
   // ...unchanged body...
 });
 
@@ -323,3 +334,18 @@ store.initStore()
     console.error('Failed to initialize database:', err);
     process.exit(1);
   });
+
+  async function saveOrderWithUniqueId(orderData) {
+  let attempts = 0;
+  while (attempts < 5) {
+    const id = generateOrderId();
+    try {
+      await store.saveOrder({ ...orderData, id });
+      return id;
+    } catch (err) {
+      if (err.code === '23505') { attempts++; continue; } // unique_violation — try again
+      throw err;
+    }
+  }
+  throw new Error('Could not generate a unique order ID after 5 attempts');
+}
