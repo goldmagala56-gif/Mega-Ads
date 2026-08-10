@@ -62,7 +62,7 @@ function renderCartItems() {
 
   list.innerHTML = Object.values(grouped).map((item, idx) => `
     <div class="cart-item" data-name="${item.name.replace(/"/g,'&quot;')}">
-      <div class="cart-item-img">${item.icon}</div>
+      <div class="cart-item-img">${item.img ? `<img src="${item.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px"/>` : item.icon}</div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-unit">Unit price: <span data-usd="${item.usdPrice}">${convertPrice(item.usdPrice)}</span></div>

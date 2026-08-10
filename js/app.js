@@ -193,7 +193,7 @@ function renderDeals(items, gridId) {
         <div class="deal-price"><span data-usd="${d.usd}">${convertPrice(d.usd)}</span></div>
         <div class="deal-name">${d.name}</div>
       </div>
-      <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${d.name.replace(/'/g,"\\'")}', ${d.usd}, '${d.icon}')">+ Add to Cart</button>
+      <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${d.name.replace(/'/g,"\\'")}', ${d.usd}, '${d.icon}', '${d.img || ''}')">+ Add to Cart</button>
     </div>
   `).join('');
 }
@@ -278,8 +278,8 @@ function syncCartBadges() {
   if (mob) mob.textContent = count;
 }
 
-function addToCart(name, usdPrice, icon) {
-  cart.push({ name, usdPrice, icon });
+function addToCart(name, usdPrice, icon, img) {
+  cart.push({ name, usdPrice, icon, img: img || '' });
   persistCart();
   syncCartBadges();
   showToast(icon + ' Added to cart!');
@@ -287,6 +287,21 @@ function addToCart(name, usdPrice, icon) {
 
 function openCart() {
   window.location.href = 'cart.html';
+}
+
+function addToCartPage() {
+  const p = currentProduct;
+  const unitPrice = (activeVariantPrice !== null) ? activeVariantPrice : p.usd;
+  const activeLabel = document.querySelector('.gallery-thumb.active .thumb-variant-label');
+  const itemName = activeLabel ? `${p.name} — ${activeLabel.textContent}` : p.name;
+  const currentImg = document.getElementById('mainImg').src;
+
+  for (let i = 0; i < currentQty; i++) {
+    cart.push({ name: itemName, usdPrice: unitPrice, icon: p.icon, img: currentImg });
+  }
+  persistCart();
+  syncCartBadges();
+  showToast(p.icon + ' Added ' + currentQty + ' to cart!');
 }
 
 // =====================
